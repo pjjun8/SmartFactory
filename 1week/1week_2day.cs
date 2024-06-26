@@ -43,11 +43,12 @@ namespace CToF
             //단, 원주율은 Math 클래스를 사용하세요
             double radius;
             Console.WriteLine($"반지름을 입력하세요 : ");
-            radius = Int32.Parse(Console.ReadLine());
+            radius = Int32.Parse(Console.ReadLine());    // int32.Parse 중요
 
             double area = Math.PI * radius * radius;
 
-            Console.WriteLine($"{area:F2}");
+            Console.WriteLine($"{area:F2}");    //:F2 는 소숫점 2자리까지 출력하게 해준다.
         }
     }
 }
+-----------------------------------------------------------------
