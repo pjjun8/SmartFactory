@@ -105,3 +105,19 @@ else{
     Console.WriteLine("님 틀림");
 }
 --------------------------------------------------------------
+namespace FirstFor
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //1~100 까지 합을 구해보세요
+            int sum = 0;
+            for(int i = 0; i <= 100; i++)
+            {
+                sum += i;
+            }
+            Console.WriteLine(sum);
+        }
+    }
+}
