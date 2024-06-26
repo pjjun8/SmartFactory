@@ -42,7 +42,7 @@ namespace CToF
             //단, 소수점 둘째자리까지만 출력하세요.
             //단, 원주율은 Math 클래스를 사용하세요
             double radius;
-            Console.WriteLine($"반지름을 입력하세요 : ");
+            Console.Write($"반지름을 입력하세요 : ");
             radius = Int32.Parse(Console.ReadLine());    // int32.Parse 중요
 
             double area = Math.PI * radius * radius;
@@ -52,3 +52,28 @@ namespace CToF
     }
 }
 -----------------------------------------------------------------
+namespace IfApp01
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            int value = Int32.Parse(Console.ReadLine());  // 변수선언, 초기화
+
+            if (value == 100)
+            {
+                Console.WriteLine("if로직 실행");
+            }
+            else if(value == 200)
+            {
+                Console.WriteLine("else if 로직 실행");
+            }
+            else
+            {
+                Console.WriteLine("else 로직 실행");
+            }
+        }
+    }
+}
+---------------------------------------------------------------
