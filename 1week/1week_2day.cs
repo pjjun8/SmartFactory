@@ -121,3 +121,63 @@ namespace FirstFor
         }
     }
 }
+--------------------------------------------------------------
+namespace WhileApp
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int i = 0;
+            int sum = 0;
+
+            while(i <= 100)
+            {
+                sum += i;
+                i++;
+            }
+            Console.WriteLine(sum);
+        }
+    }
+}
+--------------------------------------------------------------
+namespace WhileApp
+{
+    internal class Program
+    {
+        // 홀수의 합과 짝수의 합을 구해주세요. for, while 둘다
+        // 2500 = 홀수, 2550 = 짝수
+        static void Main(string[] args)
+        {
+            int sum1 = 0;
+            int sum2 = 0;
+            for (int j = 0; j <= 100; j ++) 
+            {
+                if (j % 2 == 1)
+                {
+                    sum1 += j;  //홀수
+                }
+                else
+                {
+                    sum2 += j;  //짝수
+                }
+            }
+            Console.WriteLine($"for문의 홀수는: {sum1}, 짝수는: {sum2}");
+            int i = 0;
+            sum1 = 0;
+            sum2 = 0;
+            while(i <= 100)
+            {
+                if (i % 2 == 1)
+                {
+                    sum1 += i++;  //홀수
+                }
+                else
+                {
+                    sum2 += i++;  //짝수
+                }
+            }
+            Console.WriteLine($"while문의 홀수는: {sum1}, 짝수는: {sum2}");
+        }
+    }
+}
