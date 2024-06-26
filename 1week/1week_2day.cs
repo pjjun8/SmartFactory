@@ -73,7 +73,35 @@ namespace IfApp01
             {
                 Console.WriteLine("else 로직 실행");
             }
+
+                        Console.Write("수를 입력하세요 : ");
+            double num = double.Parse(Console.ReadLine());
+
+            if (num % 2 == 1)
+            {
+                Console.WriteLine("홀수입니다.");
+            }
+            else
+            { 
+                Console.WriteLine("짝수입니다.");
+            }
         }
     }
 }
 ---------------------------------------------------------------
+int a = 5;
+int b = 3;
+int c = 4;
+
+if((a + b + c > 10) && (a == b))
+{
+    Console.WriteLine("다 맞다.");
+}
+else if ((a + b + c > 10) || (a == b))
+{
+    Console.WriteLine("하나 맞음");
+}
+else{
+    Console.WriteLine("님 틀림");
+}
+--------------------------------------------------------------
