@@ -137,6 +137,8 @@ while (true)
     }
 }
 -------------------------------------------------------------------------
+    
+-------------------------------------------------------------------------
 namespace GuGuDan
 {
     internal class Program
@@ -156,3 +158,42 @@ namespace GuGuDan
     }
 }
 --------------------------------------------------------------------------
+namespace GuGuDan
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //5단계 별그리기 제약 : 50 이하의 정수가 입력됨을 가정합니다.﻿  5단계 - 마름모 (홀수만가능)
+            int num = int.Parse(Console.ReadLine());
+            string star = "*";
+            string jum = " ";
+
+            for (int i = 0; i < num/2+1; i++)
+            {
+                for (int j = num / 2-i; j > 0; j--)
+                {
+                    Console.Write(jum);
+                }
+                for (int j = num-(i+1); j < num+i; j++)
+                {
+                    if (i > num/2) { break; }
+                    Console.Write(star);
+                }
+                Console.WriteLine();
+            }
+            for (int i = 1; i < num/2+1; i++) 
+            {
+                for (int j = 0; j <= i-1; j++)
+                {
+                    Console.Write(jum);
+                }
+                for(int j = num-(2*i); j> 0; j--)
+                {
+                    Console.Write(star);
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+}
