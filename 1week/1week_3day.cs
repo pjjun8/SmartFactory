@@ -120,7 +120,7 @@ while (true)
             break;
     }
     Console.Write("계산을 계속하시겠습니까? (y/n): ");
-    string ox = Console.ReadLine();
+    string ox = Console.ReadLine().ToLower();
     if (ox == "n")
     {
         Console.Write("계산 종료");
@@ -137,3 +137,22 @@ while (true)
     }
 }
 -------------------------------------------------------------------------
+namespace GuGuDan
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //9단부터 2단까지 출력!
+            // 9*9 = 81부터 2*1 = 2까지
+            for (int i = 9; i > 1; i--)
+            {
+                for(int j = 9; j > 0; j--)
+                {
+                    Console.WriteLine($"{i} * {j} = {i * j}");
+                }
+            } 
+        }
+    }
+}
+--------------------------------------------------------------------------
