@@ -65,3 +65,27 @@ namespace WhileApp
         j--;
     }
 --------------------------------------------------------------------------------
+ Console.Write("성적을 입력하세요: ");
+ int score = int.Parse(Console.ReadLine());
+
+ if(100 == score || 90 <= score)
+ {
+     Console.WriteLine("A학점");
+ }
+else if (90 > score && 80 <= score)
+ {
+     Console.WriteLine("B학점");
+ }
+else if (80 > score && 70 <= score)
+ {
+     Console.WriteLine("C학점");
+ }
+else if (70 > score && 60 <= score)
+ {
+     Console.WriteLine("D학점");
+ }
+ else
+ {
+     Console.WriteLine("F학점");
+ }
+------------------------------------------------------------------------------
