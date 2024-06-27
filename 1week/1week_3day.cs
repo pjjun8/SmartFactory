@@ -89,3 +89,51 @@ else if (70 > score && 60 <= score)
      Console.WriteLine("F학점");
  }
 ------------------------------------------------------------------------------
+while (true)
+{
+    Console.Write("첫 번째 숫자를 입력하세요: ");
+    double num1 = double.Parse(Console.ReadLine());
+
+    Console.Write("연산자를 입력하세요: ");
+    string op = Console.ReadLine();
+
+    Console.Write("두 번째 숫자를 입력하세요: ");
+    double num2 = double.Parse(Console.ReadLine());
+
+    switch (op)
+    {
+
+        case "+":
+            Console.WriteLine($"결과는 {num1 + num2}입니다.");
+            break;
+        case "-":
+            Console.WriteLine($"{num1 - num2}");
+            break;
+        case "*":
+            Console.WriteLine($"{num1 * num2}");
+            break;
+        case "/":
+            Console.WriteLine($"{num1 / num2}");
+            break;
+        default:
+            Console.WriteLine("오류");
+            break;
+    }
+    Console.Write("계산을 계속하시겠습니까? (y/n): ");
+    string ox = Console.ReadLine();
+    if (ox == "n")
+    {
+        Console.Write("계산 종료");
+        break;
+    }
+    else if (ox == "y")
+    {
+        Console.WriteLine("계산 다시");
+    }
+    else
+    {
+        Console.WriteLine("비정상적 입력");
+        break;
+    }
+}
+-------------------------------------------------------------------------
