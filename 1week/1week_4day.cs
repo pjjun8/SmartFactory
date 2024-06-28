@@ -145,3 +145,52 @@ static void Main()
     Console.WriteLine(Plus(v1, v2));
     Console.WriteLine(result);
 }
+--------------------------------------------------------------------------------
+ class Calculator
+{
+    public Calculator() // 생성자
+    {
+
+    }
+    public Calculator(string name)
+    {
+
+    }
+    public int Multiple(int a, int b)
+    {
+        return a * b;
+    }
+    public double Divide(int a, double b)
+    {
+        return (double)a / b;
+    }
+}
+static void Main(string[] args)
+{
+    Calculator cal = new Calculator("계산기");
+
+    Console.WriteLine(cal.Multiple(5, 6));
+    Console.WriteLine(cal.Divide(100, 5));
+}
+-------------------------------------------------------------------------------
+         static void PrintInfo(string name, int age)
+        {
+            Console.WriteLine($"{name}은{age}살 입니다.");
+        }
+        static int ThreePlus(int a, int b, int c)
+        { 
+            return a + b + c;
+        }
+        double Plus(double a, double b)
+        {
+            return a + b;
+        }
+        static void Main(string[] args)
+        {
+            PrintInfo("홍길동", 20); // static 으로 선언된 함수는 객체를 생성 하지 않아도 사용가능
+            PrintInfo("이순신", 30);
+            Console.WriteLine(ThreePlus(1, 2, 3));
+
+            Program p = new Program();
+            Console.WriteLine(p.Plus(3.14, 9.88));
+        }
