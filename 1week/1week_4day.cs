@@ -194,3 +194,42 @@ static void Main(string[] args)
             Program p = new Program();
             Console.WriteLine(p.Plus(3.14, 9.88));
         }
+-------------------------------------------------------------------------------
+ using System.Dynamic;
+using static System.Formats.Asn1.AsnWriter;
+
+namespace Quiz06
+{
+    internal class Program
+    {
+        //국어, 영어 ,수학 성적을 입력받아 총점을 구해 출력하는 프로그램 메소드로 만들어봥
+        static int[] Input()
+        {
+            int[] score = new int[3];
+            Console.WriteLine("국어, 영어, 수학 성적을 입력하세요: ");
+
+            for (int i = 0; i < score.Length; i++)
+            {
+                score[i] = Int32.Parse(Console.ReadLine());
+            }
+            return score;
+        }
+        static int Output(int []a)
+        {
+            int []score = a;
+            int total = 0;
+            for (int i = 0;i < score.Length;i++)
+            {
+                total += score[i];
+            }
+            return total ;
+        }
+        static void Main(string[] args)
+        {
+            int[] score = Input();
+            int total = Output(score);
+            Console.WriteLine(total);
+        }
+    }
+}
+-----------------------------------------------------------------------------------
