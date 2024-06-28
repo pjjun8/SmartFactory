@@ -37,3 +37,41 @@
       Console.WriteLine(arr[i]);
   }
 ----------------------------------------------------------------------------
+
+           // 정수형 배열 score를 만들고 순서대로 국어, 영어, 수학 성적을 입력받아 총점과 평균을 출력하세요.
+
+            int[] score = new int[3];
+            double total = 0;
+            double avg = 0;
+            
+            for (int i = 0; i < score.Length; i++)
+            {
+                score[i] = Int32.Parse(Console.ReadLine());
+                total += score[i];
+                avg = total / score.Length;
+            }
+
+            Console.WriteLine($"총점:{total}, 평균: {avg:F2}");
+----------------------------------------------------------------------------
+ int[] numbers = { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+
+for (int i = 0; i < numbers.Length; i++)
+{ 
+    if(numbers[i] % 2 == 0)
+    {
+        Console.WriteLine(numbers[i]);
+    }
+}
+
+for (int i = 0; i < numbers.Length; i++)
+{
+    Console.WriteLine(numbers[i]);
+}
+-------------------------------------------------------------------------------
+             string str = Console.ReadLine();
+            string outText = "";
+            for (int i = str.Length -1; i >= 0; i--)
+            { 
+                outText += str[i];
+            }
+            Console.WriteLine(outText);
