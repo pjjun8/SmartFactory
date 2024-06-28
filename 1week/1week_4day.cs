@@ -75,3 +75,73 @@ for (int i = 0; i < numbers.Length; i++)
                 outText += str[i];
             }
             Console.WriteLine(outText);
+--------------------------------------------------------------------------------
+             // 1. 크기 100인 정수형 배열을 만들고 1~100 까지 초기화 하세요.
+            // 2. 3의 배수는 배열의 요소값을 이용해서 콘솔 화면에 출력
+            // 3. 7의 배수는 index 값을 이용해서 출력해 보세요.
+            int[] arr = new int[100];
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = i + 1;               
+                
+            }
+
+            for (int i = 0;i < arr.Length; i++)
+            {
+                if (arr[i] % 3 == 0)
+                    Console.Write($"{arr[i]} ");
+            }
+------------------------------------------------------------------------------------
+             int[,] arr = new int[3, 3];
+            int cnt = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    arr[i, j] = cnt++;
+                    Console.Write($"{arr[i,j]} ");
+                }
+                Console.WriteLine(" ");
+            }
+------------------------------------------------------------------------------------
+class product
+{
+    static void NamePrint()
+    {
+        Console.WriteLine("라면 입니다.");
+    }
+    static string NamePrint2()
+    {
+        return "라면 입니다2.";
+    }
+    public void GetNamePrint()
+    {
+        NamePrint();
+    }
+    public void GetNamePrint2()
+    {
+        Console.WriteLine(NamePrint2());
+    }
+}
+
+static void Main()
+{
+    product pd = new product();
+    pd.GetNamePrint();
+    pd.GetNamePrint2();
+    
+}
+--------------------------------------------------------------------------------
+static int Plus(int a, int b)
+{
+   return a + b;
+}
+static void Main()
+{
+    int v1 = 100;
+    int v2 = 200;
+    int result = v1 + v2;
+    Console.WriteLine(Plus(v1, v2));
+    Console.WriteLine(result);
+}
