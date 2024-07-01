@@ -86,9 +86,9 @@ namespace ScoreApp02
         static int TotalScore(int[] score)
         {
             int totalscore = 0;
-            for (int i = 0; i < score.Length; i++)
+            foreach (int i in score)
             {
-                totalscore += score[i];
+                totalscore += i;
             }
             return totalscore;
         }
@@ -108,4 +108,58 @@ namespace ScoreApp02
         }
     }
 }
+
 -----------------------------------------------------------------------
+namespace OOP01
+{
+    class Book
+    {
+        string Title;
+        decimal ISBN13;
+        string Contants;
+        string Author;
+        int PageCount;
+    }
+    class Student
+    {
+        public int ID;
+        public string Name;
+        public string Run()
+        {
+            return "학번 : "+ this.ID +" " + this.Name +" 달리다";
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Book guliver = new Book();
+            Student hong = new Student();
+            hong.ID = 1;
+            hong.Name = "홍길동";
+            Console.WriteLine(hong.ID);
+            Console.WriteLine(hong.Name);
+            Console.WriteLine(hong.Run());
+        }
+    }
+}
+------------------------------------------------------------------------
+class Mathmatics
+{
+    /*멤버 변수
+     * 생성자
+     * 멤버 메소드*/
+    public int f(int x)
+    {
+        return x * x;
+    }
+}
+internal class Program
+{
+    static void Main(string[] args)
+    {
+        Mathmatics m = new Mathmatics();
+        Console.WriteLine(m.f(5));
+    }
+}
+-------------------------------------------------------------------------
