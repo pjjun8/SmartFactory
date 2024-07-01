@@ -163,3 +163,28 @@ internal class Program
     }
 }
 -------------------------------------------------------------------------
+namespace ConsoleApp4
+{
+    class Person
+    {
+        public string name;
+        
+        public Person()
+        {
+            name = "이름없음";
+            Console.WriteLine("생성자 호출");
+        }
+        public Person(string name)
+        {
+            this.name = name;
+            Console.WriteLine($"인자가 1개 있는 생성자 호출 : {this.name}");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person("홍길동");
+        }
+    }
+}
