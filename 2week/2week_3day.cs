@@ -208,3 +208,143 @@ namespace OOPApp04
     }
 }
 ------------------------------------------------------------------------------
+namespace OOPApp05
+{
+    abstract class Car  //추상 클래스
+    {
+        public abstract void Run(); //추상 메소드 오버라이드시 무조건 재정의 필요
+    }
+    class Bus : Car
+    {
+        public override void Run()
+        {
+            Console.WriteLine("버스가 달린다.");
+        }
+    }
+    class Taxi : Car
+    {
+        public override void Run()
+        {
+            Console.WriteLine("택시가 달린다.");
+        }
+    }
+    class Truck : Car
+    {
+        public override void Run()
+        {
+            Console.WriteLine("트럭 달린다.");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //Car car = new Car();    //Car 클래스를 abstract 클래스로 만들었기 때문에 안됨
+            Bus bus = new Bus();
+            Taxi taxi = new Taxi();
+            Truck truck = new Truck();
+            bus.Run();
+            taxi.Run();
+            truck.Run();
+
+            Car car1 = new Bus();
+            Car car2 = new Taxi();
+            Car car3 = new Truck();
+            car1.Run();
+            car2.Run();
+            car3.Run();
+
+            Car[] cars = new Car[3];
+            cars[0] = new Bus();
+            cars[1] = new Taxi();
+            cars[2] = new Truck();
+            for (int i = 0; i < 3; i++)
+            {
+                cars[i].Run();
+            }
+
+        }
+    }
+}
+--------------------------------------------------------------------------
+using System.Drawing;
+
+namespace PropertyApp02
+{
+    class Person
+    {   //맴버변수
+        private string name;
+        private int age;
+
+        public string Color { get; set; }
+        //Property
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+        public int Age
+        {
+            get
+            {  
+                return age;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    age = value;
+                }
+                else
+                {
+                    Console.WriteLine("나이는 0보다 작을 수 없습니다.");
+                }
+            }
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Person paul = new Person();
+            paul.Age = 23;
+            paul.Name = "파울";
+            Console.WriteLine($"이름: {paul.Name}, 나이: {paul.Age}");
+        }
+    }
+}
+--------------------------------------------------------------------------
+namespace P133App
+{
+    class Cat
+    {
+        //private string name;
+        //private int age;
+        //private string color;
+
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Color { get; set; }
+        public string ShowCatInfo()
+        {
+            return $"{Name}의 나이는 {Age}이고 색깔은 {Color}입니다.";
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Cat cat = new Cat();
+            cat.Name = "나비";
+            cat.Age = 35;
+            cat.Color = "검정색";
+            Console.WriteLine(cat.ShowCatInfo());
+        }
+    }
+}
