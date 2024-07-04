@@ -117,3 +117,48 @@ namespace OOPApp06
     }
 }
 -------------------------------------------------------------------------------
+namespace OOP07
+{
+    //다중상속
+    //유니콘 ---> 날개가 있는 말!!
+    class Horse
+    {
+        public void Run()
+        {
+            Console.WriteLine("말 달리다.");
+        }
+    }
+    class Angel { }
+    interface IWing //Abstract Method
+    {
+        public void Fly();  //Abstract Method
+
+    }
+    interface IWing2 //Abstract Method
+    {
+        public void Fly();  //Abstract Method
+
+    }
+    class Unicon : Horse, IWing
+    {
+        public void Fly()//interface의 메소드 구현
+        {
+            Console.WriteLine("유니콘 날다!");
+        }
+        public void performMagic()//유니콘의 멤버 메소드
+        {
+            Console.WriteLine("마법 뿅뿅");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Unicon unicon = new Unicon();
+            unicon.Run();
+            unicon.Fly();
+            unicon.performMagic();
+        }
+    }
+}
+---------------------------------------------------------------------
