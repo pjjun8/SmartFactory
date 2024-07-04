@@ -42,10 +42,10 @@ namespace OOPApp06
             this.kind = kind;
             this.speed = speed;
         }
-        public override void ShowInformation()
+        /*public override void ShowInformation()
         {
             Console.WriteLine($"차 종류는: {kind}, 속도는: {speed}입니다.");
-        }
+        }*/
     }
     class Taxi : Car
     {
@@ -64,10 +64,10 @@ namespace OOPApp06
             this.kind = kind;
             this.speed = speed;
         }
-        public override void ShowInformation()
+        /*public override void ShowInformation()
         {
             Console.WriteLine($"차 종류는: {kind}, 속도는: {speed}입니다.");
-        }
+        }*/
     }
     class Truck : Car
     {
@@ -86,10 +86,10 @@ namespace OOPApp06
             this.kind = kind;
             this.speed = speed;
         }
-        public override void ShowInformation()
+        /*public override void ShowInformation()
         {
             Console.WriteLine($"차 종류는: {kind}, 속도는: {speed}입니다.");
-        }
+        }*/
     }
     internal class Program
     {
