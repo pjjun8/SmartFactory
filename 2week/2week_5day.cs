@@ -111,4 +111,74 @@ namespace RandomApp01
     }
 }
 ------------------------------------------------------------------------------
+namespace LottoApp02
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            List<int> lottoNumberList = new List<int>(); //리스트 사용
 
+            while (lottoNumberList.Count < 7)
+            {
+                int number = random.Next(1, 46);
+                //중복 체크
+                if (!lottoNumberList.Contains(number))
+                {
+                    lottoNumberList.Add(number);
+                }
+            }
+            //보너스 번호 뽑기 0번지 첫번째 요소를 보너스 번호로 하자.
+            int bounusNumber = lottoNumberList[0];
+            lottoNumberList.RemoveAt(0);
+            //로또번호 6개만 오름차순 정령
+            lottoNumberList.Sort();
+
+            foreach (int i in lottoNumberList)
+            {
+                Console.Write(i+ " ");
+            }
+            Console.WriteLine();
+
+            Console.WriteLine($"보너스 번호 : {bounusNumber}");
+        }
+    }
+}
+-----------------------------------------------------------------------------
+namespace LottoApp02
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            //HashSet은 중복을 허용하지 않음
+            HashSet<int> lottoNumbers = new HashSet<int>(); //해쉬셋 사용
+
+            while ( lottoNumbers.Count < 6 )
+            {
+                int number = random.Next(1, 46);
+                lottoNumbers.Add(number);
+            }// 로또번호 6개 만들기
+
+            //보너스 번호
+            int bonusNumber;
+            do
+            {
+                bonusNumber = random.Next(1, 46);
+            }while (lottoNumbers.Contains(bonusNumber));
+
+            //출력
+            //로또번호
+            foreach (int number in lottoNumbers)
+            {
+                Console.Write(number + " ");
+            }
+            Console.WriteLine();
+            //보너스
+            Console.WriteLine($"보너스 번호 : " + bonusNumber);
+        }
+    }
+}
+------------------------------------------------------------------------------
