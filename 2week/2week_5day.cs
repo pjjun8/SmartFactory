@@ -268,3 +268,34 @@ namespace TestApp03
     }
 }
 ----------------------------------------------------------------------
+namespace TestApp03
+{
+	/*문자열의 개수를 출력해 주세요.
+	문자열을 입력하세요 : ﻿123%$#ABCDxyz 
+	알파벳 대문자 : 4
+	알파벳 소문자 : 3
+	숫자 : 3
+	특수문자 3
+	*/
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string words = Console.ReadLine();
+            int bc = 0, sc = 0, num = 0, spec = 0;
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (words[i] >= 'A' && words[i] <= 'Z') { bc++; }
+                else if (words[i] >= 'a' && words[i] <= 'z') { sc++; }
+                else if (words[i] >= '0' && words[i] <= '9') { num++; }
+                else { spec++; }
+            }
+            Console.WriteLine($"알파벳 대문자 {bc}");
+            Console.WriteLine($"알파벳 소문자 {sc}");
+            Console.WriteLine($"숫자 {num}");
+            Console.WriteLine($"특수문자 {spec}");
+        }
+    }
+}
+-------------------------------------------------------------------
