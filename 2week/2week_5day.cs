@@ -182,3 +182,89 @@ namespace LottoApp02
     }
 }
 ------------------------------------------------------------------------------
+namespace BubbleSort01
+{
+    internal class Program
+    {
+        /*
+         ﻿   int[] list = {4, 5, 7, 3, 2, 1, 9, 8}일때
+            이를 순서대로 정렬하여 출력해 보세요.
+            단, Array.Sort를 사용하지 않고 순수 값 교환으로 작성해 보세요.
+         */
+        static void Main(string[] args)
+        {
+            int[] list = { 4, 5, 7, 3, 2, 1, 9, 8 };
+            int temp;
+
+            //Array.Sort(list);
+            for (int i = 0; i < list.Length; i++)
+            {
+                for (int j = i; j < list.Length; j++)
+                {
+                    if (list[i] > list[j])
+                    {
+                        temp = list[i];
+                        list[i] = list[j];
+                        list[j] = temp;
+                    }
+                }
+                Console.Write(list[i] + " ");
+            }
+        }
+    }
+}
+-----------------------------------------------------------------------
+    using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TestApp01
+{
+    class Person
+    {
+        public Person()
+        {
+            Console.WriteLine("디폴트 생성자 호출.");
+        }
+        ~Person()
+        {
+            Console.WriteLine("소멸자 호출.");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Person person = new Person();
+        }
+    }
+}
+----------------------------------------------------------------------
+namespace TestApp03
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            int[] score = new int[3];
+            for (int i = 0; i < 3; i++)
+            {
+                score[i] = random.Next(70, 101); 
+            }
+            Console.WriteLine(score.Max());
+            Console.WriteLine(score.Min());
+            Console.WriteLine(score.Average());
+            /*int[] arr4 = new int[5] { 21, 98, 43, 27, 13 };
+            int[] arr5 = { 21, 98, 43, 27, 13 };
+            Console.WriteLine($"Max : {arr4.Max()}");
+            Console.WriteLine($"Min : {arr4.Min()}");
+            Console.WriteLine($"Sum : {arr4.Sum()}");
+            Console.WriteLine($"Average : {arr4.Average()}");
+            Console.WriteLine($"Count : {arr4.Count()}");*/
+        }
+    }
+}
+----------------------------------------------------------------------
