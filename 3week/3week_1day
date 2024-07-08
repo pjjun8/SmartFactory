@@ -55,3 +55,45 @@ namespace Test00
     }
 }
 ------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CalculatorApp02
+{
+    class Calculator
+    {
+        private double radius;
+        private double Pi = Math.PI;
+        private int width, height;
+        public double ComputerTriangleArea(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+            return (this.width* this.height) / 2.0;
+        }
+        public double ComputerCirecleArea(int radius)
+        {
+            this.radius = radius;
+            return this.radius * this.radius * Pi;
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Calculator cal = new Calculator();
+            string a = Console.ReadLine();
+            string[] b = a.Split(' ');
+            int value1 = int.Parse(b[0]);
+            int value2 = int.Parse(b[1]);
+            int radius = int.Parse(b[2]);
+
+            Console.WriteLine(cal.ComputerTriangleArea(value1, value2));
+            Console.WriteLine($"{cal.ComputerCirecleArea(radius):F2}");
+        }
+    }
+}
+----------------------------------------------------------------------------------
