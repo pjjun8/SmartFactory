@@ -1,1 +1,57 @@
+namespace HashSetSortTest
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            HashSet<int> data = new HashSet<int>() { 5, 1, 3, 4, 2 };
+            List<int> list = new List<int>(data);
+            list.Sort();
 
+            foreach (int i in list)
+            {
+                Console.Write(i + " ");
+            }
+        }
+    }
+}
+-----------------------------------------------------------------
+using System.Collections.Generic;
+
+namespace Test00
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Random random = new Random();
+            HashSet<int> hash = new HashSet<int>();
+            int bonus;
+
+            while (hash.Count < 6)
+            {
+                hash.Add(random.Next(1, 47));
+            }
+            /* List<int> list = new List<int>(hash);
+             bonus = list[0];
+             list.RemoveAt(0);
+
+             foreach (int i in list)
+             {
+                 Console.Write(i + " ");
+             }
+             Console.WriteLine($"\n{bonus}");*/
+            do
+            {
+                bonus = random.Next(1, 47);
+            } while (hash.Contains(bonus));
+
+            foreach (int i in hash)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine($"\n{bonus}");
+        }
+    }
+}
+------------------------------------------------------------------
