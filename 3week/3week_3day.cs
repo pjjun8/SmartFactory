@@ -238,3 +238,86 @@ namespace Code101
         }
     }
 }
+------------------------------------------------------------
+namespace P50Exam01
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void btnDispose_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            txtResult.Text = txtName.Text + "님! 당신의 학번은" + txtID.Text + "입니다.";
+
+            MessageBox.Show($"{txtName.Text}님! 당신의 학번은 {txtID.Text}입니다.",
+                            "이명박!",
+                            MessageBoxButtons.OK);
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+---------------------------------------------------------
+namespace WinFormsApp4
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string str;
+            str = "당신의 연령은 \n";
+            if (radioButton1.Checked == true)
+                str = str + radioButton1.Text;
+            if (radioButton2.Checked == true)
+                str = str + radioButton2.Text;
+            if (radioButton3.Checked == true)
+                str = str + radioButton3.Text;
+            if (radioButton4.Checked == true)
+                str = str + radioButton4.Text;
+            if (radioButton5.Checked == true)
+                str = str + radioButton5.Text;
+            if (radioButton6.Checked == true)
+                str = str + radioButton6.Text;
+
+            str = str + "\n" + "\n" + "좋아하는 색은" + " ";
+
+            if (checkBox1.Checked == true)
+                str = str + checkBox1.Text + Environment.NewLine;
+            if (checkBox2.Checked == true)
+                str = str + checkBox2.Text + Environment.NewLine;
+            if (checkBox3.Checked == true)
+                str = str + checkBox3.Text + Environment.NewLine;
+            if (checkBox4.Checked == true)
+                str = str + checkBox4.Text + Environment.NewLine;
+            if (checkBox5.Checked == true)
+                str = str + checkBox5.Text + Environment.NewLine;
+            if (checkBox6.Checked == true)
+                str = str + checkBox6.Text + Environment.NewLine;
+
+            str = str + "입니다.";
+
+            label1.Text = str;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+    }
+}
