@@ -151,15 +151,16 @@ namespace IndexerTest2
             double avg = 0.0;
 
             StudentScore ss = new StudentScore();
-
+            ss[0, 0] = 1; ss[0, 1] = 1; ss[0, 2] = 1;
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
                     sum += ss[i, j];
+                    Console.WriteLine(sum);
                 }
             }
         }
     }
 }
-
+-----------------------------------------------------------
