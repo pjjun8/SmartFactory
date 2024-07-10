@@ -164,3 +164,77 @@ namespace IndexerTest2
     }
 }
 -----------------------------------------------------------
+namespace Code100
+{
+    enum TrafficLight { Green, Red, Yellow };
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            TrafficLight light = new TrafficLight();
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine(light+i);
+            }
+            for (int i = 0;i < 3;i++)
+            {
+                Console.WriteLine((TrafficLight)i);
+            }
+        }
+    }
+}
+--------------------------------------------------------
+namespace Code99
+{
+    enum Days { Sun=2, Mon, Tue, Wed=8, Thu, Fri, Sat }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine((int)Days.Sun);
+            Console.WriteLine((int)Days.Mon);
+            Console.WriteLine((int)Days.Tue);
+            Console.WriteLine((int)Days.Wed);
+            Console.WriteLine((int)Days.Thu);
+            Console.WriteLine((int)Days.Fri);
+            Console.WriteLine(Days.Sat);
+        }
+    }
+}
+--------------------------------------------------------
+namespace Code101
+{
+    enum TrafficLights { Green=1, Red=10, Yellow=100 }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int x = int.Parse(Console.ReadLine());
+            TrafficLights trafficLights = new TrafficLights();
+
+            switch(trafficLights + x)
+            {
+                case TrafficLights.Green:
+                    break;
+                case TrafficLights.Red:
+                    break;
+                case TrafficLights.Yellow:
+                    break;
+                default:
+                    break;
+            }
+            //switch ((TrafficLights)x)
+            //{
+            //    case TrafficLights.Green:
+            //        break;
+            //    case TrafficLights.Red:
+            //        break;
+            //    case TrafficLights.Yellow:
+            //        break;
+            //    default:
+            //        break;
+            //}
+        }
+    }
+}
