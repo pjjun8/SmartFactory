@@ -217,3 +217,199 @@ namespace DelegateApp02
     }
 }
 -------------------------------------------------------------
+using System.Text;
+
+namespace WinFormsApp6
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Dispose();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("당신의 연령은");
+            if (radioButton1.Checked == true)
+                sb.Append(radioButton1.Text);
+            if (radioButton2.Checked == true)
+                sb.Append(radioButton2.Text);
+            if (radioButton3.Checked == true)
+                sb.Append(radioButton3.Text);
+            if (radioButton4.Checked == true)
+                sb.Append(radioButton4.Text);
+            sb.AppendLine();
+            sb.AppendLine("좋아하는 색은");
+            if (checkBox1.Checked == true)
+                sb.Append(checkBox1.Text);
+            if (checkBox2.Checked == true)
+                sb.Append(checkBox2.Text);
+            if (checkBox3.Checked == true)
+                sb.Append(checkBox3.Text);
+            if (checkBox4.Checked == true)
+                sb.Append(checkBox4.Text);
+            sb.AppendLine("입니다.");
+
+            textBox1.Text = sb.ToString();
+        }
+    }
+}
+-----------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            listBox1.Items.Add("장갑");
+            listBox1.Items.Add("양말");
+            listBox1.Items.Add("타월");
+            listBox1.Items.Add("바지");
+            listBox1.Items.Add("반팔티");
+            listBox1.Items.Add("팬티");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Add(textBox1.Text);
+            textBox1.Text = "";
+            textBox1.Focus();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Add(listBox1.Text);
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Remove(listBox2.Text);
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            listBox1.Items.Add("경상북도");
+            listBox1.Items.Add("경상남도");
+            listBox1.Items.Add("경상북도");
+            listBox1.Items.Add("강원도");
+            listBox1.Items.Add("서울특별시");
+            listBox1.Items.Add("인천광역시");
+            listBox1.Items.Add("부산광역시");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Add(textBox1.Text);
+            textBox1.Text = "";
+            textBox1.Focus();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Add(listBox1.Text);
+            listBox1.Items.Remove(listBox1.Text);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Add(listBox2.Text);
+            listBox2.Items.Remove(listBox2.Text);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+-------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp4
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int n = int.Parse(textBox1.Text);
+            int sum = 0;
+            
+            for (int i = 0; i <= n; i++)
+            {
+                sum += i;
+            }
+            textBox2.Text = sum.ToString();
+        }
+    }
+}
+-------------------------------------------------------------------
