@@ -120,6 +120,7 @@ namespace AddressTest01
             {
                 int set;
                 int num = int.Parse(Console.ReadLine());
+                int a;
                 switch (num)
                 {
                     case 1:
@@ -134,8 +135,17 @@ namespace AddressTest01
                         Console.WriteLine($"\n데이터가 정상적으로 입력되었습니다.");
                         break;
                     case 2:
-                        Console.Write($"\n삭제할 리스트 번호입력 (0부터 시작) : ");
-                        list.RemoveAt(int.Parse(Console.ReadLine()));
+                        Console.Write($"\n삭제할 ID 입력 : ");
+                        
+                        a = int.Parse(Console.ReadLine());
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            if(list[i].Id == a)
+                            {
+                                list.RemoveAt(i);
+                                break;
+                            }
+                        }
                         Console.WriteLine($"\n삭제 완료.");
                         break;
                     case 3:
@@ -148,8 +158,17 @@ namespace AddressTest01
                         }
                         break;
                     case 4:
-                        Console.Write($"\n수정할 리스트 번호입력 (0부터 시작) : ");
-                        list.RemoveAt(set = int.Parse(Console.ReadLine()));
+                        Console.Write($"\n수정할 ID 입력 : ");
+                        a = int.Parse(Console.ReadLine());
+                        int j;
+                        for (j = 0; j < list.Count; j++)
+                        {
+                            if (list[j].Id == a)
+                            {
+                                list.RemoveAt(j);
+                                break;
+                            }
+                        }
                         inf = new Information();
                         Console.Write($"\n수정할 ID를 입력해 주세요 : ");
                         inf.Id = int.Parse(Console.ReadLine());
@@ -157,7 +176,7 @@ namespace AddressTest01
                         inf.Name = Console.ReadLine();
                         Console.WriteLine($"\n수정할전화번호를 입력해 주세요 : ");
                         inf.Hp = Console.ReadLine();
-                        list.Insert(set, inf);
+                        list.Insert(j, inf);
                         break;
                     case 5:
                         Console.WriteLine($"프로그램 종료.");
@@ -185,4 +204,5 @@ namespace AddressTest01
         }
     }
 }
+
 
