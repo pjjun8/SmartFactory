@@ -102,4 +102,132 @@ namespace ConsoleApp14
     }
 }
 ------------------------------------------------------
+using System.Threading;
 
+namespace WinFormsApp7
+{
+    public partial class Form1 : Form
+    {
+        //멤버변수
+        private int number;
+        DateTime nowTime;
+        //생성자
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void GetNumber()
+        {
+            number++;
+        }
+        public void OutNumber()
+        {
+            textBox1.AppendText(number + "\r\n");   //\r는 캐리즈 리턴으로 엔터를 치면 다음 줄에 커서를 앞으로 땡겨줌
+        }
+        public void GetTime()
+        {
+            nowTime = DateTime.Now; //현재 시간을 준다.
+        }
+        public void OutTime()
+        {
+            textBox2.AppendText(nowTime + "\r\n");
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                GetNumber();
+                OutNumber();
+                GetTime();
+                OutTime();
+                Thread.Sleep(1000);
+            }
+        }
+    }
+}
+------------------------------------------------
+namespace WinFormsApp8
+{
+    public partial class Form1 : Form
+    {
+        private int n;
+        private int x;
+        private int y;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            n = int.Parse(textBox1.Text);
+            x = 0; y = 0;
+
+            for (int i = 1; i <= n; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    x += i;
+                    textBox3.Text = x.ToString();
+                }
+                else
+                {
+                    y += i;
+                    textBox2.Text = y.ToString();
+                }
+            }
+
+
+        }
+    }
+}
+-------------------------------------------------------
+namespace WinFormsApp8
+{
+    public partial class Form1 : Form
+    {
+        private int n;
+        private int x;
+        private int y;
+        private int z;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            n = int.Parse(textBox1.Text);
+            x = 0; y = 0; z = 0;
+
+            for (int i = 1; i <= n; i++)
+            {
+                if (i % 3 == 0)
+                {
+                    x += i;
+                    textBox2.AppendText(i + " + ");
+                }
+                else if (i % 3 == 1)
+                {
+                    y += i;
+                    textBox3.AppendText(i + " + ");
+                }
+                else if (i % 3 == 2)
+                {
+                    z += i;
+                    textBox4.AppendText(i + " + ");
+                }
+            }
+            textBox2.Text = textBox2.Text.Substring(0, textBox2.Text.Length - 2);
+            textBox3.Text = textBox3.Text.Substring(0, textBox3.Text.Length - 2);
+            textBox4.Text = textBox4.Text.Substring(0, textBox4.Text.Length - 2);
+            textBox2.AppendText("= " + x);
+            textBox3.AppendText("= " + y);
+            textBox4.AppendText("= " + z);
+        }
+    }
+}
+-----------------------------------------------------------------------
