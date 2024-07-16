@@ -1,1 +1,18 @@
 
+--테이블 삭제
+DROP TABLE EMP_DLL;
+--p313 테이블 만들기
+CREATE TABLE EMP_DLL (
+    EMPNO   NUMBER(4),
+    ENAME   VARCHAR2(10),
+    JOB     VARCHAR2(9)
+);
+--검색
+SELECT * FROM EMP_DLL;
+--삽입
+INSERT INTO EMP_DLL
+VALUES (1, 'TOM', 'MANAGER');
+INSERT INTO EMP_DLL
+VALUES (2, '홍길동', '대리');
+--검색
+SELECT * FROM EMP_DLL;
