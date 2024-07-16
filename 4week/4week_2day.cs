@@ -109,3 +109,38 @@ WHERE SAL >= 2000 AND SAL <= 3000;
 SELECT * FROM EMP
 WHERE SAL BETWEEN 2000 AND 3000;
 --------------------------------------------------
+using Oracle.ManagedDataAccess.Client;
+
+namespace ConsoleApp16
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //1. 외부 프로그램 연결 모듈 받기 -- 도구 ->Nuget
+            //2. 연결 스크립트를 사용
+            string strConn = "Data Source=(DESCRIPTION=" +
+                "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                "(HOST=localhost)(PORT=1521)))" +
+                "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                "(SERVICE_NAME=xe)));" +
+                "User Id=scott;Password=tiger;";
+
+            //1. 연결 객체 만들기
+            OracleConnection conn = new OracleConnection(strConn);
+            //2. 연결 객체 만들기 --> client
+            conn.Open();
+            //3. 프로그래밍
+            OracleCommand cmd = new OracleCommand();
+            cmd.Connection = conn;
+
+            cmd.CommandText = "Create Table PhoneBook " +
+                "(ID number(4) PRIMARY KEY,  " +
+                "NAME varchar(20), " +
+                "HP varchar(20))";
+            cmd.ExecuteNonQuery();
+            //4. 리소스 반환 및 종료
+            conn.Close();
+        }
+    }
+}
