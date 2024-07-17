@@ -1,1 +1,16 @@
 
+--EMP 테이블 조회
+SELECT * FROM EMP;
+SELECT ENAME, JOB, DEPTNO FROM EMP;
+
+--부서 번호가 20번인 직원 모두 출력하라
+SELECT * FROM EMP
+WHERE DEPTNO = 20 OR DEPTNO = 10;
+--DNAME 기준으로 내림차순으로 정렬해 보세요.
+SELECT DNAME FROM DEPT
+ORDER BY DNAME DESC;
+--EMP 테이블에서 급여가 1500 이상 3000 이하인 모든 직원정보를 출력하세요.
+-- 단, BETWEEN A AND B 문법을 사용해 주세요.
+SELECT * FROM EMP
+WHERE SAL BETWEEN 1500 AND 3000
+ORDER BY SAL DESC;
