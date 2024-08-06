@@ -87,3 +87,66 @@ namespace ProgresssBar01
     }
 }
 ------------------------------------------------------------------
+namespace DataGridApp04
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            dataGridView1.Columns.Add("NO", "번호");
+            dataGridView1.Columns.Add("Name", "이름");
+            dataGridView1.Columns.Add("HP", "전화번호");
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            string no = textBoxNo.Text;
+            string name = textBoxName.Text;
+            string hp = textBoxHP.Text;
+
+            if (!string.IsNullOrEmpty(no) && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(hp))
+            {
+                dataGridView1.Rows.Add(no, name, hp);
+            }
+            else
+            {
+                MessageBox.Show("입력좀 해라");
+            }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                dataGridView1.Rows.Remove(row);
+            }
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            string searchValue = textBoxSearch.Text;
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["Name"].Value != null && row.Cells["Name"].Value.ToString().Equals(searchValue))
+                {
+                    row.Selected = true;
+                    MessageBox.Show($"있다임마");
+                    return;
+                }
+            }
+            MessageBox.Show("몰라임마");
+        }
+
+        private void textBoxName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+---------------------------------------------------------------
