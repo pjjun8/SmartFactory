@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Windows.Forms;
+
+namespace WinFormsApp14
+{
+    public partial class Form3 : Form
+    {
+        private Form1 frm3;
+        private string str2;
+        public Form3(object frm2, string _str2)
+        {
+            InitializeComponent();
+            frm3 = (Form1)frm2;
+            str2 = _str2;
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
+    }
+}
