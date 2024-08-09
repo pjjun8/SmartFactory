@@ -1,3 +1,4 @@
+//윈폼 1
 using Oracle.ManagedDataAccess.Client;
 
 namespace WinFormsApp14
@@ -5,7 +6,6 @@ namespace WinFormsApp14
 
     public partial class Form1 : Form
     {
-
         public string ProductName { get; set; } //주문한 제품 이름
         public int ProductEa {  get; set; }     // 주문한 제품 수량
         public Form1()
@@ -63,9 +63,12 @@ namespace WinFormsApp14
             }
 
             MessageBox.Show("주문이 완료 되었습니다!");
+            
             Form2 frm2 = new Form2(this);
-            frm2.ShowDialog(); //모달 
-            //Show() 모달리스
+            //this.Hide(); // 약간의 오류 있음 Hide 하면 종료해도 백그라운드로 계속 돌아감 
+            //frm2.ShowDialog(); //모달 
+            frm2.Show(); //모달리스
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
