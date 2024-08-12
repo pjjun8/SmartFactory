@@ -1,4 +1,4 @@
-//주문 화면
+//주문 화면 form1
 using Oracle.ManagedDataAccess.Client;
 
 namespace WinFormsApp14
@@ -82,9 +82,8 @@ namespace WinFormsApp14
         }
     }
 }
-
 -----------------------------------------------------------------------
-//공정 화면
+//공정 화면 form2
 using LanguageExt;
 using Oracle.ManagedDataAccess.Client;
 using System;
@@ -112,7 +111,8 @@ namespace WinFormsApp14
         public bool stopFlag = false;
         public int flagF5 = 0;
         Form1 frm1;     // HAS-A ((포함))
-        Form5 form5 = new Form5();
+        //Form5 form5;
+        Form5 frm5;
         Random random = new Random();
 
         public Form2() //디폴트 생성자
@@ -129,7 +129,7 @@ namespace WinFormsApp14
             frm1 = (Form1)form;
             name = frm1.ProductName;
             ea = frm1.ProductEa;
-
+            //form5 = new Form5();
             //MessageBox.Show($"{name}, {ea}"); //확인용 메세지 박스
         }
         public Form2(string str, Form1 form1)
@@ -139,7 +139,7 @@ namespace WinFormsApp14
         }
         public void GongZang1() //임의적 오류 발생 코드
         {
-            int rand = random.Next(48, 153);
+            int rand = random.Next(45, 153);
 
             if (!(rand >= 50 && rand <= 150))
             {
@@ -229,7 +229,7 @@ namespace WinFormsApp14
             }
             if (flag == true)
             {
-                //Form6 form6 = new Form6(this);
+                
                 form6.upFlag = true;
                 form6.addFlag = false;
                 form6.checkFlag = true;
@@ -302,12 +302,15 @@ namespace WinFormsApp14
         private void button2_Click(object sender, EventArgs e)
         {
             if (stopFlag == false)
-                DbmsCheck();
-
-            if (flag == false)
             {
                 flagF5 = 1;
-                form5 = new Form5(this);
+                DbmsCheck();
+            }
+            if (flag == false)
+            {
+                
+                //form5 = new Form5(this);
+                frm5 = new Form5(this);
                 timer1.Start();
             }
             else
@@ -456,8 +459,10 @@ namespace WinFormsApp14
 
         private void 제품판매통계ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Form5 frm5 = new Form5(this);
-            form5.Show(); //모달
+            frm5 = new Form5(this);
+            frm5.Show();
+            
+            //form5.Show(); //모달
         }
 
         private void 재고관리ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -477,9 +482,8 @@ namespace WinFormsApp14
         }
     }
 }
-
 ----------------------------------------------------------------------
-//로그인 화면
+//로그인 화면 form3
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -585,9 +589,8 @@ namespace WinFormsApp14
         }
     }
 }
-
 ------------------------------------------------------------------------
-//회원가입 화면
+//회원가입 화면 form4
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -713,9 +716,8 @@ namespace WinFormsApp14
         }
     }
 }
-
 ----------------------------------------------------------------
-//판매통계 화면
+//판매통계 화면 form5
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections;
@@ -738,8 +740,6 @@ namespace WinFormsApp14
         private int f2Ea;
         private string dbName;  //판매 통계 테이블 제품 이름
         private int dbEa;       //판매 통계 테이블 제품 판매 개수
-        public int flag;
-        //public bool flag = false;
         Form2 form2;
         public Form5()
         {
@@ -751,8 +751,6 @@ namespace WinFormsApp14
             form2 = (Form2)form;
             f2Name = form2.name;
             f2Ea = form2.ea;
-            flag = form2.flagF5;
-
         }
         string strConn = "Data Source=(DESCRIPTION=" +
                     "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
@@ -762,32 +760,6 @@ namespace WinFormsApp14
                     "User Id=scott;Password=tiger;";
         public void Dbmssale()
         {
-
-
-            //dataGridView에 db테이블 가져오기
-            OracleConnection conn = new OracleConnection(strConn);
-
-            conn.Open();
-            string query = "SELECT PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE FROM product_sale";
-            OracleDataAdapter adapter = new OracleDataAdapter(query, conn);
-            DataTable dataTable = new DataTable();
-
-            adapter.Fill(dataTable);
-            dataGridView1.DataSource = dataTable;
-            OracleCommand cmd = new OracleCommand();
-
-            cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = '{f2Ea}' WHERE PNAME = '{f2Name}'";
-            cmd.ExecuteNonQuery();
-
-            string query1 = "SELECT PNAME, SALESQUANTITY FROM product_sale";
-            string query2 = "SELECT PNAME, SALESPRICE FROM product_sale";
-            OracleCommand cmd1 = new OracleCommand(query1, conn);
-            OracleCommand cmd2 = new OracleCommand(query2, conn);
-            OracleDataReader dataReader1 = cmd1.ExecuteReader();
-            OracleDataReader dataReader2 = cmd2.ExecuteReader();
-
-            chart1.Series["SALESQUANTITY"].Points.DataBind(dataReader1, "PNAME", "SALESQUANTITY", "Tooltip=SALESQUANTITY");
-            chart1.Series["SALESPRICE"].Points.DataBind(dataReader2, "PNAME", "SALESPRICE", "Tooltip=SALESPRICE");
             //cmd.CommandText = "DROP TABLE PRODUCT_SALE";
             //cmd.ExecuteNonQuery();
 
@@ -820,37 +792,25 @@ namespace WinFormsApp14
             //cmd.CommandText = "COMMIT";
             // cmd.ExecuteNonQuery();
             //4. 리소스 반환 및 종료
-            conn.Close();
-        }
-        private void Form5_Load(object sender, EventArgs e)
-        {
-            //차트 속성
-            Title title = new Title();
-            chart1.Titles.Add(title);
-            title.Text = "판매통계";
-            title.Font = new Font("맑은고딕", 12, FontStyle.Bold);
-        }
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show($"if 문 밖{flag}");
             //dataGridView에 db테이블 가져오기
-            if (flag == 1)
+
+            using (OracleConnection conn = new OracleConnection(strConn))
             {
-                MessageBox.Show($"if 문 안{flag}");
-                using (OracleConnection conn = new OracleConnection(strConn))
+                try
                 {
-                    try
+                    conn.Open();
+                    string query = "SELECT PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE FROM PRODUCT_SALE";
+                    OracleDataAdapter adapter = new OracleDataAdapter(query, conn);
+
+                    DataTable dataTable = new DataTable();
+
+                    OracleCommand cmd = new OracleCommand(query, conn);
+
+                    OracleDataReader dataReader;
+                    
+                    if (form2.flagF5 == 1)
                     {
-                        conn.Open();
-                        string query = "SELECT PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE FROM PRODUCT_SALE";
-                        OracleDataAdapter adapter = new OracleDataAdapter(query, conn);
-
-                        DataTable dataTable = new DataTable();
-
-                        OracleCommand cmd = new OracleCommand(query, conn);
-                        OracleDataReader dataReader = cmd.ExecuteReader();
+                        dataReader = cmd.ExecuteReader();
                         int eaSum = 0, priceSum = 0;
                         while (dataReader.Read())
                         {
@@ -896,20 +856,19 @@ namespace WinFormsApp14
                                 cmd.ExecuteNonQuery();
                                 break;
                             }
-                        }
-
-                        adapter.Fill(dataTable);
-                        dataGridView1.DataSource = dataTable;
-                        //MessageBox.Show("폼 로드 및 using문 실행됨");
-                        conn.Close(); //원래 없었음
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"에러: {ex.Message}");
-                    }
+                        }// end of while
+                        form2.flagF5 = 0;
+                    }// end of if
+                    adapter.Fill(dataTable);
+                    dataGridView1.DataSource = dataTable;
+                    //MessageBox.Show("폼 로드 및 using문 실행됨");
+                    conn.Close(); //원래 없었음
                 }
-                flag = 0;
-            }// if flag 문 끝
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"에러: {ex.Message}");
+                }
+            }
 
             //버튼 클릭 시 두 개의 차트 조회
             using (OracleConnection conn = new OracleConnection(strConn))
@@ -942,7 +901,20 @@ namespace WinFormsApp14
                     MessageBox.Show($"에러: {ex.Message}");
                 }
             }
-            
+        }
+        private void Form5_Load(object sender, EventArgs e)
+        {
+            //차트 속성
+            Title title = new Title();
+            chart1.Titles.Add(title);
+            title.Text = "판매통계";
+            title.Font = new Font("맑은고딕", 12, FontStyle.Bold);
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Dbmssale();
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -967,9 +939,8 @@ namespace WinFormsApp14
         }
     }
 }
-
 ------------------------------------------------------------------------------
-//재고관리 화면
+//재고관리 화면 form6
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -1278,4 +1249,3 @@ namespace WinFormsApp14
         }
     }
 }
-
