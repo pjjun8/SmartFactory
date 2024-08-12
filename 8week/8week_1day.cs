@@ -82,8 +82,10 @@ namespace WinFormsApp14
         }
     }
 }
+
 -----------------------------------------------------------------------
 //공정 화면
+using LanguageExt;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -94,23 +96,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace WinFormsApp14
 {
     public partial class Form2 : Form   //공정 화면
     {
+        
+        public int timnum = 0;
         public string name;    //주문한 제품 이름
         public int ea;         // 주문한 제품 수량
         private int progressValue = 0;
         private int count = 1;
         public bool flag = false;
+        public bool stopFlag = false;
+        public int flagF5 = 0;
         Form1 frm1;     // HAS-A ((포함))
+        Form5 form5 = new Form5();
         Random random = new Random();
-        
+
         public Form2() //디폴트 생성자
         {
             InitializeComponent();
         }
+
+        
         //Form1에 접근하려면 Form1 속성 중 Modifiers를 private --> public으로 수정해 줘야 한다.
 
         public Form2(object form)       //생성자를 하나 더 만듦
@@ -129,10 +139,19 @@ namespace WinFormsApp14
         }
         public void GongZang1() //임의적 오류 발생 코드
         {
-            int rand = random.Next(49, 152);
+            int rand = random.Next(48, 153);
 
             if (!(rand >= 50 && rand <= 150))
             {
+                pictureBox9.Visible = false;
+                pictureBox10.Visible = false;
+                pictureBox11.Visible = false;
+                pictureBox12.Visible = false;
+                pictureBox13.Visible = false;
+                pictureBox14.Visible = false;
+                pictureBox15.Visible = false;
+                pictureBox16.Visible = false;
+                stopFlag = true;
                 timer1.Stop();
                 MessageBox.Show($"해당 공정에서 오류입니다!");
             }
@@ -165,17 +184,75 @@ namespace WinFormsApp14
 
             OracleDataReader reader = cmd.ExecuteReader();
             int Dbea; string Dbname;
+
+                Form6 form6 = new Form6(this);
+                form6.upFlag = false;
+                form6.addFlag = true;
+                form6.checkFlag = true;
+                form6.Dbms();
             
             while (reader.Read())
             {
                 Dbea = int.Parse(reader["PEA"].ToString());
                 Dbname = reader["PNAME"] as string;
 
-                if ((Dbea - ea) <= 0)
+                if (Dbname != "케이스")
                 {
-                    flag = true;
+                    if ((Dbea - ea) < 0 && name == "15kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 2)) < 0 && name == "20kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 3)) < 0 && name == "50kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 4)) < 0 && name == "75kVA")
+                    {
+                        flag = true;
+                    }
+                    else if ((Dbea - (ea * 5)) < 0 && name == "100kVA")
+                    {
+                        flag = true;
+                    }
+                }
+                else if (Dbname == "케이스")
+                {
+                    if ((Dbea - ea) < 0)
+                    {
+                        flag = true;
+                    }
                 }
             }
+            if (flag == true)
+            {
+                //Form6 form6 = new Form6(this);
+                form6.upFlag = true;
+                form6.addFlag = false;
+                form6.checkFlag = true;
+
+                form6.oil.Checked = true;
+                form6.alcoil.Checked = true;
+                form6.gucoil.Checked = true;
+                form6.core.Checked = true;
+                form6.case1.Checked = true;
+                form6.smartFlag = true;
+                if (name == "15kVA")
+                    form6.numericUpDown1.Text = $"{ea * 1}";
+                else if(name == "20kVA")
+                    form6.numericUpDown1.Text = $"{ea * 2}";
+                else if(name == "50kVA")
+                    form6.numericUpDown1.Text = $"{ea * 3}";
+                else if(name == "75kVA")
+                    form6.numericUpDown1.Text = $"{ea * 4}";
+                else if(name == "100kVA")
+                    form6.numericUpDown1.Text = $"{ea * 5}";
+                form6.Dbms();
+            }
+
             conn.Close();
         }
         private void Form2_Load(object sender, EventArgs e)
@@ -183,6 +260,15 @@ namespace WinFormsApp14
 
             this.dataGridView1.Columns.Add("Name", "제품명");
             this.dataGridView1.Columns.Add("Ea", "제품 수량");
+            //시작 시 gif 안보이게 하기
+            pictureBox9.Visible = false;
+            pictureBox10.Visible = false;
+            pictureBox11.Visible = false;
+            pictureBox12.Visible = false;
+            pictureBox13.Visible = false;
+            pictureBox14.Visible = false;
+            pictureBox15.Visible = false;
+            pictureBox16.Visible = false;
 
             for (int i = 1; i <= 8; i++)
             {
@@ -196,11 +282,11 @@ namespace WinFormsApp14
                     progressBar.Value = 0;
                 }
             }
-            timer1.Interval = 10; // 100 milliseconds
+            timer1.Interval = 40; // 100 milliseconds
         }
 
         //재고 수량 확인 로직
-        
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -210,39 +296,105 @@ namespace WinFormsApp14
         private void button1_Click(object sender, EventArgs e)
         {
             this.dataGridView1.Rows.Clear();
-            this.dataGridView1.Rows.Add($"{name}", $"{ea}"); // 오류 사항! 버튼 누르면 계속 같은 같이 나옴 수정 필요??
+            this.dataGridView1.Rows.Add($"{name}", $"{ea}");
         }
-
+        
         private void button2_Click(object sender, EventArgs e)
         {
-            DbmsCheck();
-            Form6 form6 = new Form6(this);
-            
+            if (stopFlag == false)
+                DbmsCheck();
+
             if (flag == false)
             {
+                flagF5 = 1;
+                form5 = new Form5(this);
                 timer1.Start();
-                form6.Dbms();
-                form6.upFlag = false;
-                form6.addFlag = true;
-                form6.checkFlag = true;
             }
             else
+            {
+                flag = false;
                 MessageBox.Show("재료가 부족합니다.");
+            }
+                
         }
 
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             Control[] controls = this.Controls.Find("progressBar" + count, true);
+            ProgressBar progressBar;
             if (controls.Length > 0 && controls[0] is ProgressBar)
             {
-                ProgressBar progressBar = (ProgressBar)controls[0];
+                progressBar = (ProgressBar)controls[0];
                 progressValue += 1;
 
                 if (progressValue <= 100)
                 {
                     progressBar.Value = progressValue;
-
+                    if (count == 1)
+                    {
+                        pictureBox9.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox9.Visible = false;
+                    }
+                    if (count == 2)
+                    {
+                        pictureBox10.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox10.Visible = false;
+                    }
+                    if (count == 3)
+                    {
+                        pictureBox11.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox11.Visible = false;
+                    }
+                    if (count == 4)
+                    {
+                        pictureBox12.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox12.Visible = false;
+                    }
+                    if (count == 5)
+                    {
+                        pictureBox13.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox13.Visible = false;
+                    }
+                    if (count == 6)
+                    {
+                        pictureBox14.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox14.Visible = false;
+                    }
+                    if (count == 7)
+                    {
+                        pictureBox15.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox15.Visible = false;
+                    }
+                    if (count == 8)
+                    {
+                        pictureBox16.Visible = true;
+                    }
+                    else
+                    {
+                        pictureBox16.Visible = false;
+                    }
                 }
                 else
                 {
@@ -253,6 +405,25 @@ namespace WinFormsApp14
                 }
                 if (count > 8)
                 {
+                    pictureBox9.Visible = false;
+                    pictureBox10.Visible = false;
+                    pictureBox11.Visible = false;
+                    pictureBox12.Visible = false;
+                    pictureBox13.Visible = false;
+                    pictureBox14.Visible = false;
+                    pictureBox15.Visible = false;
+                    pictureBox16.Visible = false;
+                    
+                    count = 1;
+                    progressValue = 0;
+                    for (int i = 1; i <= 8; i++)
+                    {
+                        controls = this.Controls.Find("progressBar" + i, true);
+                        progressBar = (ProgressBar)controls[0];
+                        progressBar.Value = progressValue;
+                        
+                    }
+                    stopFlag = false;
                     timer1.Stop();
                     MessageBox.Show("진행완료!");
                 }
@@ -285,8 +456,8 @@ namespace WinFormsApp14
 
         private void 제품판매통계ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form5 frm5 = new Form5(this);
-            frm5.Show(); //모달
+            //Form5 frm5 = new Form5(this);
+            form5.Show(); //모달
         }
 
         private void 재고관리ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -294,8 +465,19 @@ namespace WinFormsApp14
             Form6 frm6 = new Form6(this);
             frm6.Show(); //모달
         }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox13_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+
 ----------------------------------------------------------------------
 //로그인 화면
 using Oracle.ManagedDataAccess.Client;
@@ -403,6 +585,7 @@ namespace WinFormsApp14
         }
     }
 }
+
 ------------------------------------------------------------------------
 //회원가입 화면
 using Oracle.ManagedDataAccess.Client;
@@ -530,6 +713,7 @@ namespace WinFormsApp14
         }
     }
 }
+
 ----------------------------------------------------------------
 //판매통계 화면
 using Oracle.ManagedDataAccess.Client;
@@ -554,6 +738,8 @@ namespace WinFormsApp14
         private int f2Ea;
         private string dbName;  //판매 통계 테이블 제품 이름
         private int dbEa;       //판매 통계 테이블 제품 판매 개수
+        public int flag;
+        //public bool flag = false;
         Form2 form2;
         public Form5()
         {
@@ -565,6 +751,7 @@ namespace WinFormsApp14
             form2 = (Form2)form;
             f2Name = form2.name;
             f2Ea = form2.ea;
+            flag = form2.flagF5;
 
         }
         string strConn = "Data Source=(DESCRIPTION=" +
@@ -637,76 +824,6 @@ namespace WinFormsApp14
         }
         private void Form5_Load(object sender, EventArgs e)
         {
-            //dataGridView에 db테이블 가져오기
-            using (OracleConnection conn = new OracleConnection(strConn))
-            {
-                try
-                {
-                    conn.Open();
-                    string query = "SELECT PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE FROM PRODUCT_SALE";
-                    OracleDataAdapter adapter = new OracleDataAdapter(query, conn);
-
-                    DataTable dataTable = new DataTable();
-
-                    OracleCommand cmd = new OracleCommand(query, conn);
-                    OracleDataReader dataReader = cmd.ExecuteReader();
-                    int eaSum = 0, priceSum = 0;
-                    while (dataReader.Read())
-                    {
-                        dbName = dataReader.GetString("PNAME");
-                        dbEa = dataReader.GetInt32("SALESQUANTITY");
-                        if (f2Name == "15kVA" && dbName == "15kVA")
-                        {
-                            eaSum = dbEa + f2Ea;
-                            priceSum = eaSum * 150000;
-                            cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '15kVA'";
-                            cmd.ExecuteNonQuery();
-                            break;
-                        }
-                        else if (f2Name == "20kVA" && dbName == "20kVA")
-                        {
-                            eaSum = dbEa + f2Ea;
-                            priceSum = eaSum * 200000;
-                            cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum}  WHERE PNAME = '20kVA'";
-                            cmd.ExecuteNonQuery();
-                            break;
-                        }
-                        else if (f2Name == "50kVA" && dbName == "50kVA")
-                        {
-                            eaSum = dbEa + f2Ea;
-                            priceSum = eaSum * 500000;
-                            cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '50kVA'";
-                            cmd.ExecuteNonQuery();
-                            break;
-                        }
-                        else if (f2Name == "75kVA" && dbName == "75kVA")
-                        {
-                            eaSum = dbEa + f2Ea;
-                            priceSum = eaSum * 750000;
-                            cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '75kVA'";
-                            cmd.ExecuteNonQuery();
-                            break;
-                        }
-                        else if (f2Name == "100kVA" && dbName == "100kVA")
-                        {
-                            eaSum = dbEa + f2Ea;
-                            priceSum = eaSum * 1000000;
-                            cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '100kVA'";
-                            cmd.ExecuteNonQuery();
-                            break;
-                        }
-                    }
-
-                    adapter.Fill(dataTable);
-                    dataGridView1.DataSource = dataTable;
-                    //MessageBox.Show("폼 로드 및 using문 실행됨");
-                    conn.Close(); //원래 없었음
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"에러: {ex.Message}");
-                }
-            }
             //차트 속성
             Title title = new Title();
             chart1.Titles.Add(title);
@@ -717,7 +834,83 @@ namespace WinFormsApp14
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Dbmssale();
+            MessageBox.Show($"if 문 밖{flag}");
+            //dataGridView에 db테이블 가져오기
+            if (flag == 1)
+            {
+                MessageBox.Show($"if 문 안{flag}");
+                using (OracleConnection conn = new OracleConnection(strConn))
+                {
+                    try
+                    {
+                        conn.Open();
+                        string query = "SELECT PCODE, PNAME, PPRICE, SALESQUANTITY, SALESPRICE FROM PRODUCT_SALE";
+                        OracleDataAdapter adapter = new OracleDataAdapter(query, conn);
+
+                        DataTable dataTable = new DataTable();
+
+                        OracleCommand cmd = new OracleCommand(query, conn);
+                        OracleDataReader dataReader = cmd.ExecuteReader();
+                        int eaSum = 0, priceSum = 0;
+                        while (dataReader.Read())
+                        {
+                            dbName = dataReader.GetString("PNAME");
+                            dbEa = dataReader.GetInt32("SALESQUANTITY");
+                            if (f2Name == "15kVA" && dbName == "15kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 150000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '15kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "20kVA" && dbName == "20kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 200000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum}  WHERE PNAME = '20kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "50kVA" && dbName == "50kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 500000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '50kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "75kVA" && dbName == "75kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 750000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '75kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                            else if (f2Name == "100kVA" && dbName == "100kVA")
+                            {
+                                eaSum = dbEa + f2Ea;
+                                priceSum = eaSum * 1000000;
+                                cmd.CommandText = $"UPDATE PRODUCT_SALE SET SALESQUANTITY = {eaSum},SALESPRICE = {priceSum} WHERE PNAME = '100kVA'";
+                                cmd.ExecuteNonQuery();
+                                break;
+                            }
+                        }
+
+                        adapter.Fill(dataTable);
+                        dataGridView1.DataSource = dataTable;
+                        //MessageBox.Show("폼 로드 및 using문 실행됨");
+                        conn.Close(); //원래 없었음
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"에러: {ex.Message}");
+                    }
+                }
+                flag = 0;
+            }// if flag 문 끝
+
             //버튼 클릭 시 두 개의 차트 조회
             using (OracleConnection conn = new OracleConnection(strConn))
             {
@@ -749,6 +942,7 @@ namespace WinFormsApp14
                     MessageBox.Show($"에러: {ex.Message}");
                 }
             }
+            
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -773,6 +967,7 @@ namespace WinFormsApp14
         }
     }
 }
+
 ------------------------------------------------------------------------------
 //재고관리 화면
 using Oracle.ManagedDataAccess.Client;
@@ -799,6 +994,7 @@ namespace WinFormsApp14
         public bool upFlag = false;
         public bool addFlag = false;
         public bool checkFlag = false;
+        public bool smartFlag = false;
         public Form6()
         {
             InitializeComponent();
@@ -945,6 +1141,7 @@ namespace WinFormsApp14
                     }
                     else { MessageBox.Show("앞의 if문 올 실행 안됨"); }
                 }//end of while //재료 업데이트(사용) 로직
+                cmd.CommandText = "COMMIT";
             }
 
 
@@ -956,7 +1153,7 @@ namespace WinFormsApp14
                 cmd.CommandText = "SELECT * FROM Material ";
                 cmd.ExecuteNonQuery();
                 reader = cmd.ExecuteReader();
-
+                
                 while (reader.Read())
                 {
                     Dbea = int.Parse(reader["PEA"].ToString());
@@ -977,7 +1174,7 @@ namespace WinFormsApp14
                     {
                         ea = Dbea + ProductEa;
                         //ProductName = "알루미늄 코일";
-                        ProductEa = int.Parse(numericUpDown1.Text);
+                        //ProductEa = int.Parse(numericUpDown1.Text);
                         cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
                         ea = 0;
                         cmd.ExecuteNonQuery();
@@ -987,7 +1184,7 @@ namespace WinFormsApp14
                     {
                         ea = Dbea + ProductEa;
                         //ProductName = "구리 코일";
-                        ProductEa = int.Parse(numericUpDown1.Text);
+                        //ProductEa = int.Parse(numericUpDown1.Text);
                         cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
                         ea = 0;
                         cmd.ExecuteNonQuery();
@@ -997,7 +1194,7 @@ namespace WinFormsApp14
                     {
                         ea = Dbea + ProductEa;
                         //ProductName = "코어";
-                        ProductEa = int.Parse(numericUpDown1.Text);
+                        //ProductEa = int.Parse(numericUpDown1.Text);
                         cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
                         ea = 0;
                         cmd.ExecuteNonQuery();
@@ -1005,15 +1202,33 @@ namespace WinFormsApp14
                     }
                     if (case1.Checked == true && Dbname == "케이스")
                     {
-                        ea = Dbea + ProductEa;
+                        if (smartFlag == true)
+                        {
+                            if (f2name == "15kVA")
+                                ea = Dbea + ProductEa;
+                            else if (f2name == "20kVA")
+                                ea = Dbea + (ProductEa / 2);
+                            else if (f2name == "50kVA")
+                                ea = Dbea + (ProductEa / 3);
+                            else if (f2name == "75kVA")
+                                ea = Dbea + (ProductEa / 4);
+                            else if (f2name == "100kVA")
+                                ea = Dbea + (ProductEa / 5);
+                        }
+                        else
+                        {
+                            ea = Dbea + ProductEa;
+                        }
                         //ProductName = "케이스";
-                        ProductEa = int.Parse(numericUpDown1.Text);
+                        //ProductEa = int.Parse(numericUpDown1.Text);
                         cmd.CommandText = $"UPDATE Material SET PEA = '{ea}' WHERE PNAME = '{Dbname}'";
                         ea = 0;
                         cmd.ExecuteNonQuery();
                         case1.Checked = false;
+                        smartFlag = false;
                     }
                 }
+                cmd.CommandText = "COMMIT";
                 numericUpDown1.Text = "";
             }//재료 업데이트(추가) 로직
 
@@ -1034,8 +1249,9 @@ namespace WinFormsApp14
                 }
             }
 
-                //4. 리소스 반환 및 종료
-                conn.Close();
+            //4. 리소스 반환 및 종료
+            cmd.CommandText = "COMMIT";
+            conn.Close();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -1043,7 +1259,7 @@ namespace WinFormsApp14
             checkFlag = true;
             addFlag = false;
             
-            Dbms();
+            Dbms(); //재료 업뎃 이상함
         }
 
         private void Form6_Load(object sender, EventArgs e)
@@ -1062,3 +1278,4 @@ namespace WinFormsApp14
         }
     }
 }
+
