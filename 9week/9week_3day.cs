@@ -233,7 +233,7 @@ namespace WinFormTCPECHOClient01
     }
 }
 =============================================================================================
-//브로드 캐스트 서버
+//윈폼 브로드 캐스트 서버
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -362,7 +362,7 @@ namespace WinFormEchoServer01
     }
 }
 ===================================================================
-//브로드캐스트 클라이언트
+//윈폼 브로드캐스트 클라이언트
 using System.Net.Sockets;
 using System.Text;
 
