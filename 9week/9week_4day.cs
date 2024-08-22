@@ -98,3 +98,48 @@ h2{
     <h2>제목입니다.</h2>
 </body>
 </html>
+=============================================================
+<!--CSS 링크-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <style>
+        p{
+            line-height: 250%;
+            font-weight: bolder;
+        }
+        h3{
+            font-family: "맑은 고딕";
+            color: blue;
+            text-shadow: 3px 3px 5px #555;
+        }
+        h4{
+            font-style: italic;
+        }
+        a:link{
+            color:#0000ff;
+            text-decoration:none;
+        }
+        a:visited{
+            color:#00ff00;
+        }
+        a:hover{
+            color:#ff0000;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        a:active{
+            color:#00ffff;
+        }
+    </style>
+</head>
+<body>
+    <h2>로즈메리 허브</h2>
+
+    <p>로즈메리는 남유럽이 원산지이며 1~2미터까지 자라는 여러해살이 풀이다. 2~6월에 연보라색, 청자색, 연분홍, 흰색 꽃이 핀다.</p>
+    <h3>페퍼민트 허브</h3>
+    <h4>안녕하세요!</h4>
+    <a href="#">자유게시판</a>
+</body>
+</html>
+===============================================================
