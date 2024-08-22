@@ -143,3 +143,34 @@ h2{
 </body>
 </html>
 ===============================================================
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        p{
+            color:#444444;
+            line-height:150%;
+        }
+        #position{
+            color:#ff0000;
+            font-weight:bold;
+        }
+        .weather{
+            color:#0000ff;
+            font-weight: bold;
+        }
+        #kind{
+            color:#00ff00;
+            font-style:italic;
+            text-decoration: underline;
+        }
+    </style>
+<body>
+    <h3>다육식물</h3>
+    <p>다육 식물은 <span class="weather">내부</span>에 물을 저장하고 있기 떄문에 다른 식물에 비해  <span id="position">통통한</span> 외관을 가지는 경우가 많다. 이렇한 특성을 다육질이라고 부르는데 다육 식물은 이러한 특성 이외에도 물을 절약하기 위해 다음과 같은 다양한 특성을 가지고 있다.</p>
+    <p>다육으로 된 부위에 따라 다음과 같이 <span id="kind">분류할</span> 수 있다.</p>
+</body>
+</html>
+============================================================
