@@ -45,3 +45,37 @@
     </table>
 </body>
 </html>
+================================================================
+//폼 양식 작성
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <Form>
+        이름 : <INPUT TYPE="text"></br>
+        나이 : <INPUT TYPE="text"><p></p>
+
+        비밀번호 : <INPUT TYPE="password"><p></p>
+        개인정보 : <INPUT TYPE="radio" NAME="info" checked> 공개
+                <INPUT TYPE="radio" NAME="info"> 비공개<p></p>
+        이메일 : <INPUT TYPE="text">@
+            <Select>
+                <OPTION>선택</OPTION>
+                <OPTION>naver.com</OPTION>
+                <OPTION>gmaile.com</OPTION>
+                <OPTION>daum.net</OPTION>
+                <OPTION>직접입력</OPTION>
+            </Select><p></p>
+            자기소개 : <br>
+            <textarea rows="10" cols="60"></textarea><br>
+
+            <button type="button">검색</button>
+            <button type="submit">확인</button>
+            <button type="reset">다시쓰기</button>
+
+
+    </Form>
+</body>
+</html>
