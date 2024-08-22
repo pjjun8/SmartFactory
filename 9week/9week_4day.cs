@@ -79,3 +79,22 @@
     </Form>
 </body>
 </html>
+=============================================================
+<!--MyStyle.CSS-->
+h2{
+            color : #ff0000;
+            font-size : 18px;
+ }
+=============================================================
+<!--CSS2.html-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>외부 스타일 시트</title>
+<link rel="stylesheet" type="text/CSS" href="./CSS/MyStyle.CSS">
+</head>
+<body>
+    <h2>제목입니다.</h2>
+</body>
+</html>
