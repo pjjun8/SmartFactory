@@ -102,3 +102,52 @@ javascript 자료형!!
     
 </body>
 </html>
+=======================================================
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        window.onload = function(){
+            var img = document.createElement('img');
+            img.src = "./pic2.png";
+            img.width = 750;
+            img.height = 600;
+            
+            document.body.appendChild(img);
+            
+            var header = document.createElement('h1');
+            var textNode = document.createTextNode('Hello DOM');
+
+            //노드 연결
+            header.appendChild(textNode);
+            document.body.appendChild(header);
+        };
+        
+    </script>
+</head>
+<body>
+
+</body>
+</html>
+=========================================================
+<!DOCTYPE html>
+<html>
+<head>
+    
+</head>
+<body>
+    <script>
+        var output = '';
+        //코딩
+        output += '<ul>';
+            output += '<li>봄</li>';
+            output += '<li>여름</li>';
+            output += '<li>가을</li>';
+            output += '<li>겨울</li>';    
+        output += '</ul>';
+        document.body.innerHTML = output;
+        //document.body.textContent = output;
+    </script>
+</body>
+</html>
+===========================================================
