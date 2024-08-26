@@ -85,3 +85,20 @@ javascript 자료형!!
     
 </body>
 </html>
+========================================================
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <script>
+        var child = window.open('','', 'width=300, height=200');
+
+        setInterval(function(){
+            child.moveBy(10, 10);
+        }, 100)
+    </script>
+    
+</body>
+</html>
