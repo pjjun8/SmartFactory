@@ -61,3 +61,27 @@ javascript 자료형!!
     </script>
 </body>
 </html>
+==========================================================
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <script>
+        var product = {
+            제품명: '동결건조 김치찌개',
+            유형: '냉동식품',
+            성분: '간,설,파,마,후,깨,참,김치,돼지고기',
+            원산지: '김성태 집'
+        };
+        
+        var output = '';
+        for (var key in product) {
+            output += 'e ' + key +':'+product[key] +'\n';
+        }
+        alert(output);
+    </script>
+    
+</body>
+</html>
