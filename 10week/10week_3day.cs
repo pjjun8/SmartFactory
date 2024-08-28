@@ -114,6 +114,7 @@ namespace ViewDataEmpty.Controllers
 <h2>@ViewData["data1"]</h2>
 <h2>@TempData["data3"]</h2>
 =========================================================================
+//디자인 패턴 빌드패턴
 namespace BuilderPatternConsole
 {
     public class Computer
