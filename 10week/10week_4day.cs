@@ -237,4 +237,14 @@ namespace StrongTypeView.Controllers
     }
     
 </div>
+===========================================
+https://github.com/HaSense/CSharp/tree/master/Web/Core/12.ViewImports
 
+==========================================
+https://github.com/HaSense/CSharp/tree/master/Web/Core/13.TagHelpers
+==========================================
+ImageTagHelpers
+https://github.com/HaSense/CSharp/tree/master/Web/Core/14.ImageTagHelpers
+==========================================
+TagHelers_Form
+https://github.com/HaSense/CSharp/tree/master/Web/Core/15.TagHelers_Form
