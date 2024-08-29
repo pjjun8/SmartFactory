@@ -46,11 +46,14 @@ namespace ModelDataMVC02.Controllers
             string[] food = { "된장국", "김치찌게", "소금빵", "두루치기" };
             ViewBag.Book = new List<string>() { "C#프로그래밍", "Java 정복", "HTML5", "CSS 하루만에하기" };
             TempData["foods"] = food;
+            ViewData["st1"] = "zzz";
+            ViewData["st2"] = new List<string>() { "zzzz", "ssss", "ddddd", "qqqq" };
 
             return View();
         }
     }
 }
+
 --------------------------------------
 
 @{
@@ -63,6 +66,8 @@ namespace ModelDataMVC02.Controllers
     ViewData["Title"] = "Output";
     var book = ViewBag.Book as List<string>;
     string[] food = TempData["foods"] as string[];
+    var st1 = ViewData["st1"];
+    var st2 = ViewData["st2"] as List<string>;
 }
 
 <h1>Output</h1>
@@ -79,6 +84,15 @@ namespace ModelDataMVC02.Controllers
 
  @{
     foreach (var item in food)
+    {
+        @item
+        <br />
+    }
+}
+@st1
+<br />
+@{
+    foreach (var item in st2)
     {
         @item
         <br />
