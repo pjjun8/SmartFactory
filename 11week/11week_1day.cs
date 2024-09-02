@@ -56,3 +56,66 @@ namespace ConsoleApp30
         }
     }
 }
+================================================================================
+// 그냥 콘솔 앱
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace EF8_All
+{
+    public class Student
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
+
+        [MaxLength(30)]
+        public string Name { get; set; }
+
+        [MaxLength(30)]
+        public string HP { get; set; }
+    }
+
+    public class StudentDbContext : DbContext
+    {
+        public DbSet<Student> Students { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server = (local)\\SQLEXPRESS; " +
+                        "Database = MyDb; " +
+                        "Trusted_Connection = True;" +
+                        "Encrypt=False");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            var context = new StudentDbContext();
+
+            //context.Database.EnsureDeleted();
+            //context.Database.EnsureCreated();
+
+            //데이터 삽입Create, Insert)
+            var st = new Student();
+            st.Name = "유재석";
+            st.HP = "010-1111-1111";
+
+            context.Students.Add(st);
+            context.SaveChanges();
+            Console.WriteLine("드감");
+
+            st = new Student();
+            st.Name = "강호동";
+            st.HP = "010-2222-2222";
+
+            context.Students.Add(st);
+            context.SaveChanges();
+            Console.WriteLine("드감");
+
+            context.Dispose();
+        }
+    }
+}
