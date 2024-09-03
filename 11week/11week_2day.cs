@@ -134,3 +134,411 @@ namespace EF_exem01
         }// end of Main
     } // end of Program class
 }
+===========================================================================================================
+//오후에 한거
+// 컨트롤러
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using WebAddressBook.Models;
+
+namespace WebAddressBook.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly ILogger<HomeController> logger;
+        private readonly PersonDbContext context;
+
+        public HomeController(PersonDbContext _context, ILogger<HomeController> _logger)
+        {
+            logger = _logger;
+            context = _context;
+        }
+
+        public IActionResult Index()
+        {
+            var persons = context.Persons.ToList<Person>();
+
+            return View(persons);
+
+        }
+
+		public IActionResult Create()
+		{
+			return View();
+		}
+
+		[HttpPost]
+        public IActionResult Create(Person person)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Persons.Add(person);
+                context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(person);
+        }
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || context.Persons == null)
+            {
+                return NotFound();
+            }
+            var personData = context.Persons.Find(id);
+
+            if (personData == null)
+            {
+                return NotFound();
+            }
+            return View(personData);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int? id, Person person)
+        {
+            if (id != person.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                //_context.Student.Update(std);
+                context.Update(person);
+                context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(person);
+
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null || context.Persons == null)
+            {
+                return NotFound();
+            }
+
+            var personData = context.Persons.FirstOrDefault(x => x.Id == id);
+
+            if (personData == null)
+            {
+                return NotFound();
+            }
+
+            return View(personData);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || context.Persons == null)
+            {
+                return NotFound();
+            }
+            var personData = context.Persons.FirstOrDefault((x => x.Id == id));
+
+            if (personData == null)
+            {
+                return NotFound();
+            }
+            return View(personData);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+            var personData = context.Persons.Find(id);
+            if (personData != null)
+            {
+                context.Persons.Remove(personData);
+            }
+            context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+---------------------------------------------------------------------
+//모델
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebAddressBook.Models
+{
+    public class Person
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Hp { get; set; }
+    }
+}
+-----------------------------------------------------------------------
+//모델
+using Microsoft.EntityFrameworkCore;
+
+namespace WebAddressBook.Models
+{
+    public class PersonDbContext : DbContext
+    {
+        public DbSet<Person> Persons { get; set; }
+
+        public PersonDbContext(DbContextOptions options) : base(options)
+        {
+        }
+    }
+}
+------------------------------------------------------------------------
+//프로그램.cs
+using Microsoft.EntityFrameworkCore;
+using WebAddressBook.Models;
+
+namespace WebAddressBook
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+            /////////////////////////////////////////////////////////////////////
+            var provider = builder.Services.BuildServiceProvider();
+            var config = provider.GetRequiredService<IConfiguration>();
+            builder.Services.AddDbContext<PersonDbContext>(item => item.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+
+
+            /////////////////////////////////////////////////////////////////////
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
+        }
+    }
+}
+---------------------------------------------------------------------------
+// 크리에이트 뷰
+@model WebAddressBook.Models.Person
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Person</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hp" class="control-label"></label>
+                <input asp-for="Hp" class="form-control" />
+                <span asp-validation-for="Hp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+------------------------------------------------
+// 델리트 뷰
+@model WebAddressBook.Models.Person
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Person</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Hp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Hp)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+--------------------------------------------------
+// 디테일 뷰
+@model WebAddressBook.Models.Person
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Person</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Hp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Hp)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+-----------------------------------------------
+// 에디트 뷰
+@model WebAddressBook.Models.Person
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Person</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hp" class="control-label"></label>
+                <input asp-for="Hp" class="form-control" />
+                <span asp-validation-for="Hp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+-------------------------------------------------------
+//인덱스 뷰
+@model IEnumerable<WebAddressBook.Models.Person>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hp)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hp)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+-------------------------------------------------------
