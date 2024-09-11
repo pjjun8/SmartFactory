@@ -155,3 +155,49 @@ void loop()
   Serial.println(myIMU.readFloatAccelZ(), 4);
   delay(40);    // f = 1/40 x 1000 = 약 25Hz
 }
+==========================================================
+온습도 센서 
+Code for DHT11
+파일|예제|DHT Sensor Library|DHTtester를 아래와 같이 수정
+DHT22의 경우  최소 샘플링 주기는 2초 이상 – delay(2000);
+DHT11의 경우  최소 샘플링 주기는 1초 이상 – delay(1000);
+
+#include "DHT.h"
+#define DHTPIN 4     // Digital pin connected to the DHT sensor
+#define DHTTYPE DHT11   // DHT 22  (AM2302), AM2321
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println(F("DHTxx test!"));
+  dht.begin();
+}
+
+void loop() {
+
+  delay(2000);
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  float f = dht.readTemperature(true);
+
+  if (isnan(h) || isnan(t) || isnan(f)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+
+  float hif = dht.computeHeatIndex(f, h);
+  float hic = dht.computeHeatIndex(t, h, false);
+
+  Serial.print(F("Humidity: "));
+  Serial.print(h);
+  Serial.print(F("%  Temperature: "));
+  Serial.print(t);
+  Serial.print(F("°C "));
+  Serial.print(f);
+  Serial.print(F("°F  Heat index: "));
+  Serial.print(hic);
+  Serial.print(F("°C "));
+  Serial.print(hif);
+  Serial.println(F("°F"));
+}
