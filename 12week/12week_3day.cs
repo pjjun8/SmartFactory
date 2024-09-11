@@ -126,3 +126,32 @@ void loop() {
   Serial.println(" lx");
   delay(1000);
 }
+===========================================================
+**LIS3DH 모듈**
+**시리얼 모니터 실행(Ctrl+Shift+m)**
+**출력 형태 형식** **확인 후 시리얼 모니터 닫고 시리얼 풀로더 실행(Ctrl+Shift+l)**
+**센서** **모듈을 흔들어 보세요.**
+
+#include "SparkFunLIS3DH.h"
+#include "Wire.h"
+#include "SPI.h"
+
+LIS3DH myIMU; //Default constructor is I2C, addr 0x19.
+
+void setup() {
+  Serial.begin(9600);
+  delay(1000);
+  //Serial.println("Processor came out of reset.\n");
+  myIMU.begin();
+}
+void loop()
+{
+  //Get all parameters
+  //Serial.print("\nAccelerometer:\n");
+  Serial.print(myIMU.readFloatAccelX(), 4);
+  Serial.print(",");
+  Serial.print(myIMU.readFloatAccelY(), 4);
+  Serial.print(",");
+  Serial.println(myIMU.readFloatAccelZ(), 4);
+  delay(40);    // f = 1/40 x 1000 = 약 25Hz
+}
