@@ -123,4 +123,21 @@ void loop() {
 
   delay(2000); // 2초 간격으로 업데이트
 }
+====================================================
+**실습 목표**
+**동작 1과 2를 동시에 수행 - Red** **LED는 1초 동안 On 1초 동안 Off를 반복 수행하면서 Green LED는 스위치를 눌렀을 때 On 누르지 않으면 Off**
+void setup() {
+  pinMode(13, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(2, INPUT);
+}
+
+void loop() {
+   digitalWrite(13, HIGH);
+   delay(1000);
+   digitalWrite(13, LOW);
+   delay(1000);
+   int buttonState = digitalRead(2);
+   digitalWrite(8, buttonState);
+}
 
