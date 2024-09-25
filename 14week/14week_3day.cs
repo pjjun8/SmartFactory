@@ -97,4 +97,83 @@ void setup() {
 void loop() {
   client.loop();
 }
+=============================================================
+// Phi_SubPub.ino
+  **Phi 보드를 Subscriber이자 Publisher로** **만들기**
 
+**하나의 보드가 Subscriber 역할과 Publisher 역할을 동시에 수행하기**
+
+**예를 들어 아래 두 가지 기능을 한 보드에 구현**
+
+- **Led라는 토픽에 대한 정보를 구독하여 LED를 점등 또는 소등을 하는 Subscriber 동작**
+- **센싱한 조도 값을 Publish하는 Publisher 동작**
+
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <Wire.h>
+#include <BH1750.h>
+
+BH1750 lightMeter;
+
+const char* ssid = "RiatechA2G";
+const char* password = "730124go";
+const char* userId = "mqtt_ship";
+const char* userPw = "1234";
+const char* clientId = userId;
+char *topicSub = "MyOffice/Indoor/lamp";
+char *topicPub = "MyOffice/Indoor/Lux";
+char* server = "192.168.1.18";
+char messageBuf[100];
+
+void callback(char* topic, byte* payload, unsigned int length) { 
+  Serial.println("Message arrived!\nTopic: " + String(topic));
+  Serial.println("Length: "+ String(length, DEC));
+  
+  strncpy(messageBuf, (char*)payload, length);
+  messageBuf[length] = '\0';
+  String ledState = String(messageBuf);
+  Serial.println("Payload: "+ ledState + "\n\n");
+  if( ledState == "off"  ){      digitalWrite(LED_BUILTIN, LOW);}
+  else if (ledState=="on") { digitalWrite(LED_BUILTIN, HIGH);}
+  else { Serial.println("Wrong Message"); }
+}
+
+WiFiClient wifiClient; 
+PubSubClient client(server, 1883, callback, wifiClient);
+
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+  Wire.begin();
+  lightMeter.begin();
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print("."); delay(500);
+  }
+  Serial.println("\nWiFi Connected\nConnecting to broker");
+
+  while ( !client.connect(clientId, userId, userPw) ){ 
+    Serial.print("*"); delay(500);
+  }
+  Serial.println("\nConnected to broker");
+  Serial.print("Subscribing! topic = ");
+  Serial.println(topicSub);
+  client.subscribe(topicSub);
+}
+// Phi_SubPub_upgrade.ino
+unsigned long int preTime = 0, currentTime;
+
+void loop() {
+  client.loop();
+  currentTime = millis();
+  if( currentTime - preTime > 7000 ) {
+    preTime = currentTime;
+    char buf[20];
+    String strLuxValue = String( lightMeter.readLightLevel() );
+    strLuxValue.toCharArray(buf, strLuxValue.length() );
+    client.publish(topicPub, buf);
+    Serial.println(String(topicPub) + " : " + buf);  
+  }
+
+}
