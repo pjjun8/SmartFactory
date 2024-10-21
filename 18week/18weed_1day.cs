@@ -474,4 +474,75 @@ namespace bright_dark
     }
 }
 =========================
+using OpenCvSharp;
 
+namespace image_synthesis
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Mat image1 = new Mat(@"C:\Temp\opencv\add1.jpg", ImreadModes.Grayscale);
+            Mat image2 = new Mat(@"C:\Temp\opencv\add2.jpg", ImreadModes.Grayscale);
+            if(image1.Empty() || image2.Empty())
+            {
+                Console.WriteLine("오류났엉");
+                Environment.Exit(1);
+            }
+
+            double alpha = 0.6, beta = 0.7;
+
+            Mat add_img1 = image1 + image2;
+            Mat add_img2 = image1 * 0.5 + image2 * 0.5;
+            Mat add_img3 = image1 * alpha + image2 * (1 - alpha);
+            Mat add_img4 = new Mat();
+            Cv2.AddWeighted(image1, alpha, image2, beta, 0, add_img4);
+
+            Cv2.ImShow("image1", image1);
+            Cv2.ImShow("image2", image2);
+            Cv2.ImShow("add_img1", add_img1);
+            Cv2.ImShow("add_img2", add_img2);
+            Cv2.ImShow("add_img3", add_img3);
+            Cv2.ImShow("add_img4", add_img4);
+
+            Cv2.WaitKey(0);
+        }
+    }
+}
+===============================
+using OpenCvSharp;
+
+namespace ContrastApp
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Mat image = new Mat(@"C:\Temp\opencv\contrast_test.jpg", ImreadModes.Grayscale);
+            if(image.Empty() )
+            {
+                Console.WriteLine("오빠 오류났엉");
+                Environment.Exit(1);
+            }
+
+            Scalar meanValue = Cv2.Mean(image);
+            double avg = meanValue.Val0 / 2.0;
+
+            Mat dst1 = image * 0.5;
+            Mat dst2 = image * 2.0;
+            Mat dst3 = new Mat();
+            Mat dst4 = new Mat();
+
+            Cv2.AddWeighted(image, 0.5, Mat.Ones(image.Size(), image.Type()) * avg, 1, 0, dst3);
+            Cv2.AddWeighted(image, 2.0, Mat.Ones(image.Size(), image.Type()) * -avg, 1, 0, dst4);
+
+            Cv2.ImShow("image", image);
+            Cv2.ImShow("dst1-대비감소", dst1);
+            Cv2.ImShow("dst2-대비증가", dst2);
+            Cv2.ImShow("dst3-평균이용 대비감소", dst3);
+            Cv2.ImShow("dst4-평균이용 대비증가", dst4);
+
+            Cv2.WaitKey(0);
+        }
+    }
+}
