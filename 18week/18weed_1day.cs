@@ -367,4 +367,111 @@ namespace mat_at
         }
     }
 }
+=====================================
+using OpenCvSharp;
+
+namespace grayscale_image
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Mat image1 = new Mat(50, 512, MatType.CV_8UC1, Scalar.All(0));
+            Mat image2 = new Mat(50, 512, MatType.CV_8UC1, Scalar.All(0));
+
+            for (int i = 0; i < image1.Rows; i++)
+            {
+                for (int j = 0; j < image1.Cols; j++)
+                {
+                    image1.Set<byte>(i, j, (byte)Math.Min(j / 2, 255));
+                    image2.Set<byte>(i, j, (byte)Math.Min((j / 20) * 10, 255));
+                }
+            }
+
+            Cv2.ImShow("image1", image1);
+            Cv2.ImShow("image2", image2);
+            Cv2.WaitKey();
+        }
+    }
+}
+=================================
+using OpenCvSharp;
+
+namespace pixel_value
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Mat image = new Mat("c:\\Temp\\opencv\\pixel_test.jpg", ImreadModes.Grayscale);
+            if (image.Empty())
+            {
+                Console.WriteLine("영상을 읽지 못 했습니다.");
+                Environment.Exit(1);
+            }
+
+            Rect roi = new Rect(135, 95, 20, 15);
+            Mat roi_img = image.SubMat(roi);
+            Console.WriteLine("[roi_img] =");
+
+            for (int i = 0; i < roi_img.Rows; i++)
+            {
+                for (int j = 0; j < roi_img.Cols; j++)
+                {
+                    Console.Write($"{roi_img.At<byte>(i, j),5}");
+                }
+                Console.WriteLine();
+            }
+
+            image.Rectangle(roi, Scalar.White, 1);
+            Cv2.ImShow("image", image);
+            Cv2.WaitKey();
+        }
+    }
+}
+===============================
+using OpenCvSharp;
+
+namespace bright_dark
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Mat image = new Mat(@"C:\Temp\opencv\bright.jpg", ImreadModes.Grayscale);
+            if(image.Empty() )
+            {
+                Console.WriteLine("오빠 줮댓엉 오류났엉");
+                Environment.Exit(0);
+            }
+
+            Mat dst1 = new Mat();
+            Mat dst2 = new Mat();
+            Cv2.ConvertScaleAbs(image, dst1, 1, 100);  // 밝게 (100을 더함)
+            Cv2.ConvertScaleAbs(image, dst2, 1, -100); // 어둡게 (100을 뺌)
+            Mat dst3 = new Mat(image.Size(), image.Type(), Scalar.All(255)) - image;
+
+            Mat dst4 = new Mat(image.Size(), image.Type());
+            Mat dst5 = new Mat(image.Size(), image.Type());
+
+            for (int i = 0; i < image.Rows; i++)
+            {
+                for (int j = 0; j < image.Cols; j++)
+                {
+                    dst4.At<byte>(i, j) = (byte)(Math.Min(image.At<byte>(i, j) + 100, 255));
+                    dst5.At<byte>(i, j) = (byte)(255 - image.At<byte>(i, j));
+                }
+            }
+
+            Cv2.ImShow("원 영상", image);
+            Cv2.ImShow("dst1 - 밝게", dst1);
+            Cv2.ImShow("dst2 - 어둡게", dst2);
+            Cv2.ImShow("dst3 - 반전", dst3);
+            Cv2.ImShow("dst4 - 밝게", dst4);
+            Cv2.ImShow("dst5 - 반전", dst5);
+            Cv2.WaitKey();
+        }
+    }
+}
+=========================
 
