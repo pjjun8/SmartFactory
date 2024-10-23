@@ -170,8 +170,11 @@ namespace convert_CMY
             }
 
             Scalar white = new Scalar(255, 255, 255);
+            
+            // CMY 이미지 생성 (white - BGR_img)
             Mat CMY_img = white - BGR_img;
-
+						
+						// CMY 채널 분리
             Mat[] CMY_arr = new Mat[3];
             CMY_arr = Cv2.Split(CMY_img);
 
@@ -185,6 +188,7 @@ namespace convert_CMY
         }
     }
 }
+
 ============================================================
 using OpenCvSharp;
 
@@ -202,13 +206,19 @@ namespace conver_CMYK
             }
 
             Scalar white = new Scalar(255, 255, 255);
+            
+            // CMY 이미지 생성 (white - BGR_img)
             Mat CMY_img = white - BGR_img;
+            
+             // CMY 채널 분리
             Mat[] CMY_arr = Cv2.Split(CMY_img);
 
+						// black 채널 계산
             Mat black = new Mat();
             Cv2.Min(CMY_arr[0], CMY_arr[1], black);
             Cv2.Min(black, CMY_arr[2], black);
 
+						// CMY에서 black을 뺀 값 계산
             CMY_arr[0] = CMY_arr[0] - black;
             CMY_arr[1] = CMY_arr[1] - black;
             CMY_arr[2] = CMY_arr[2] - black;
@@ -222,4 +232,5 @@ namespace conver_CMYK
         }
     }
 }
+
 ==========================================================
