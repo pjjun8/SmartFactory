@@ -444,6 +444,7 @@ namespace test01
                         {
                             mouse_mode = 0; //마우스 모드
                             draw_mode = i;  // 그리기 모드
+                            Console.WriteLine(draw_mode);
                             Command(i);
                         }
                         else
@@ -492,16 +493,14 @@ namespace test01
                     Cv2.Line(image, pt1, pt2, color, thickness);
                     break;
 
-                case Icon_Flag.DRAW_BRUSH:
-                    Cv2.Line(image, pt1, pt2, color, thickness * 3);
-                    pt1 = pt2;
-                    break;
-
                 case Icon_Flag.ERASE:
                     Cv2.Line(image, pt1, pt2, new Scalar(255, 255, 255), thickness * 5);
                     pt1 = pt2;
                     break;
-
+                case Icon_Flag.DRAW_BRUSH:
+                    Cv2.Line(image, pt1, pt2, color, thickness * 3);
+                    pt1 = pt2;
+                    break;
                 case Icon_Flag.DRAW_CIRCLE:
                     Point pt3 = new Point(pt1.X - pt2.X, pt1.Y - pt2.Y);
                     int radius = (int)Math.Sqrt(pt3.X * pt3.X + pt3.Y * pt3.Y);
@@ -527,6 +526,7 @@ namespace test01
         }
     }
 }
+
 ----------------------------
 //Icon_Flag.cs
 using System;
@@ -555,6 +555,7 @@ namespace test01
         public const int HUE_IDX = 13;          // 색상인덱스
     }
 }
+
 ----------------------------
 //Program.cs
 using OpenCvSharp;
@@ -605,7 +606,14 @@ namespace test01
                     }
                     else
                     {
-                        toolbox.Draw(image.Clone());
+                        if(toolbox.DrawMode == Icon_Flag.DRAW_BRUSH)    //브러시 일때 계속 이어지지않고 지워져서 끊기는 거 해결함!!
+                        {
+                            toolbox.Draw(image, toolbox.Color);
+                        }
+                        else
+                        {
+                            toolbox.Draw(image.Clone());
+                        }
                     }
                 }
                 if (Cv2.WaitKey(30) == 27) // 'Esc' key to break
